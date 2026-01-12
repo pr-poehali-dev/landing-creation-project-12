@@ -134,29 +134,33 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-cyan-50">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
+      <section className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/10 -z-10"></div>
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+          <div className="inline-block">
+            <Badge className="text-sm px-6 py-2 mb-6 bg-gradient-to-r from-primary to-accent border-0">🐾 Профессиональный уход</Badge>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Второй дом для питомца
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground">
+          <p className="text-2xl md:text-3xl font-semibold text-foreground">
             В гостях у Маши
           </p>
-          <div className="flex flex-wrap justify-center gap-4 pt-4">
+          <div className="flex flex-wrap justify-center gap-3 pt-4">
             {["Видеонаблюдение 24/7", "Кинолог и зоолог", "Теплые комнаты", "Все животные"].map((benefit) => (
-              <Badge key={benefit} variant="secondary" className="px-4 py-2 text-sm">
+              <Badge key={benefit} variant="secondary" className="px-5 py-2.5 text-sm font-medium hover:scale-105 transition-transform">
                 {benefit}
               </Badge>
             ))}
           </div>
           <div className="flex flex-wrap gap-4 justify-center pt-8">
-            <Button size="lg" className="text-lg px-8">
+            <Button size="lg" className="text-lg px-10 py-6 bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all">
               <Icon name="Phone" className="mr-2" size={20} />
               +7 902 052-61-45
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8">
+            <Button size="lg" variant="outline" className="text-lg px-10 py-6 border-2 hover:border-primary hover:bg-primary/5 hover:scale-105 transition-all">
               <Icon name="MessageCircle" className="mr-2" size={20} />
               Написать
             </Button>
@@ -165,22 +169,22 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Услуги</h2>
-          <p className="text-xl text-muted-foreground">Все для вашего питомца</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Услуги</h2>
+          <p className="text-xl text-muted-foreground font-medium">Все для вашего питомца</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {services.map((service, idx) => (
             <Card 
               key={service.name} 
-              className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50 bg-gradient-to-br from-white to-primary/5"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               <CardHeader>
-                <div className="text-5xl mb-4">{service.icon}</div>
-                <CardTitle className="text-2xl">{service.name}</CardTitle>
-                <CardDescription className="text-lg font-semibold text-primary">
+                <div className="text-6xl mb-4 drop-shadow-lg">{service.icon}</div>
+                <CardTitle className="text-2xl font-bold">{service.name}</CardTitle>
+                <CardDescription className="text-lg font-bold text-primary">
                   {service.price}
                 </CardDescription>
               </CardHeader>
@@ -200,20 +204,21 @@ const Index = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="container mx-auto px-4 py-20 bg-secondary/20">
+      <section className="container mx-auto px-4 py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/30 to-transparent -z-10"></div>
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Тарифы</h2>
-          <p className="text-xl text-muted-foreground">Выберите подходящий план</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Тарифы</h2>
+          <p className="text-xl text-muted-foreground font-medium">Выберите подходящий план</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {pricing.map((plan) => (
             <Card 
               key={plan.name} 
-              className={`relative ${plan.badge ? 'border-primary border-2 shadow-xl scale-105' : ''}`}
+              className={`relative border-2 hover:shadow-2xl transition-all hover:-translate-y-2 ${plan.badge ? 'border-primary shadow-2xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5' : 'hover:border-primary/30'}`}
             >
               {plan.badge && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  {plan.badge}
+                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent to-primary border-0 text-white px-6 py-1.5 text-sm font-bold shadow-lg">
+                  ⭐ {plan.badge}
                 </Badge>
               )}
               <CardHeader className="text-center">
@@ -258,7 +263,8 @@ const Index = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-primary text-primary-foreground py-20">
+      <section className="bg-gradient-to-r from-primary via-accent to-primary text-primary-foreground py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6bS02MCAwYzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {stats.map((stat) => (
@@ -272,14 +278,14 @@ const Index = () => {
       </section>
 
       {/* Reviews Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Отзывы</h2>
-          <p className="text-xl text-muted-foreground">Что говорят наши клиенты</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Отзывы</h2>
+          <p className="text-xl text-muted-foreground font-medium">Что говорят наши клиенты</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {reviews.map((review, idx) => (
-            <Card key={idx} className="hover:shadow-lg transition-shadow">
+            <Card key={idx} className="hover:shadow-2xl transition-all hover:-translate-y-1 border-2 hover:border-accent/50 bg-gradient-to-br from-white to-accent/5">
               <CardHeader>
                 <div className="flex gap-1 mb-2">
                   {Array.from({ length: review.star }).map((_, i) => (
@@ -300,9 +306,10 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="container mx-auto px-4 py-20 bg-secondary/20">
+      <section className="container mx-auto px-4 py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 to-transparent -z-10"></div>
         <div className="max-w-2xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold">Свяжитесь с нами</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Свяжитесь с нами</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-center gap-3 text-lg">
               <Icon name="Phone" size={24} className="text-primary" />
@@ -321,17 +328,18 @@ const Index = () => {
               <span>Владивосток</span>
             </div>
           </div>
-          <Button size="lg" className="text-lg px-12 mt-8">
+          <Button size="lg" className="text-lg px-16 py-7 mt-8 bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all font-bold">
             Забронировать место
           </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground text-background py-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-lg font-semibold mb-2">В гостях у Маши</p>
-          <p className="text-sm opacity-80">© 2026 Все права защищены</p>
+      <footer className="bg-gradient-to-r from-foreground via-primary/20 to-foreground text-background py-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE2YzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6bS02MCAwYzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <p className="text-2xl font-bold mb-3">🐾 В гостях у Маши</p>
+          <p className="text-sm opacity-90">© 2026 Все права защищены</p>
         </div>
       </footer>
     </div>
