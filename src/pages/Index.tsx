@@ -134,40 +134,43 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50 to-emerald-50">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/10 -z-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(74,222,128,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.08),transparent_50%)] -z-10"></div>
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
           <div className="flex justify-center mb-8">
-            <img 
-              src="https://cdn.poehali.dev/files/freepik__-__23969.png" 
-              alt="В гостях у Маши" 
-              className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
-            />
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/10 rounded-full blur-3xl"></div>
+              <img 
+                src="https://cdn.poehali.dev/files/freepik__-__23969.png" 
+                alt="В гостях у Маши" 
+                className="relative w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+              />
+            </div>
           </div>
           <div className="inline-block">
-            <Badge className="text-sm px-6 py-2 mb-6 bg-gradient-to-r from-primary to-accent border-0">🐾 Профессиональный уход</Badge>
+            <Badge className="text-sm px-6 py-2.5 mb-6 bg-primary/90 hover:bg-primary border-0 shadow-lg">🌿 Натуральная забота</Badge>
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            Второй дом для питомца
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-tight">
+            Второй дом<br/>для питомца
           </h1>
-          <p className="text-2xl md:text-3xl font-semibold text-foreground">
+          <p className="text-2xl md:text-3xl font-medium text-muted-foreground">
             В гостях у Маши
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-4">
             {["Видеонаблюдение 24/7", "Кинолог и зоолог", "Теплые комнаты", "Все животные"].map((benefit) => (
-              <Badge key={benefit} variant="secondary" className="px-5 py-2.5 text-sm font-medium hover:scale-105 transition-transform">
+              <Badge key={benefit} className="px-5 py-2.5 text-sm font-medium bg-secondary/80 text-secondary-foreground hover:bg-secondary hover:scale-105 transition-all border border-primary/20 shadow-sm">
                 {benefit}
               </Badge>
             ))}
           </div>
           <div className="flex flex-wrap gap-4 justify-center pt-8">
-            <Button size="lg" className="text-lg px-10 py-6 bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all">
+            <Button size="lg" className="text-lg px-10 py-6 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl hover:scale-105 transition-all">
               <Icon name="Phone" className="mr-2" size={20} />
               +7 902 052-61-45
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-10 py-6 border-2 hover:border-primary hover:bg-primary/5 hover:scale-105 transition-all">
+            <Button size="lg" variant="outline" className="text-lg px-10 py-6 border-2 border-primary/30 hover:border-primary hover:bg-primary/5 hover:scale-105 transition-all">
               <Icon name="MessageCircle" className="mr-2" size={20} />
               Написать
             </Button>
@@ -176,22 +179,24 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="container mx-auto px-4 py-24">
+      <section className="container mx-auto px-4 py-24 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(251,191,36,0.06),transparent_70%)] -z-10"></div>
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Услуги</h2>
-          <p className="text-xl text-muted-foreground font-medium">Все для вашего питомца</p>
+          <Badge className="mb-4 bg-accent/20 text-accent-foreground border-accent/30">Наши услуги</Badge>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-foreground">Услуги</h2>
+          <p className="text-xl text-muted-foreground">Все для вашего питомца</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {services.map((service, idx) => (
             <Card 
               key={service.name} 
-              className="hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50 bg-gradient-to-br from-white to-primary/5"
+              className="hover:shadow-xl transition-all duration-500 hover:-translate-y-2 border border-primary/20 bg-card backdrop-blur-sm hover:border-primary/50 group"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               <CardHeader>
-                <div className="text-6xl mb-4 drop-shadow-lg">{service.icon}</div>
-                <CardTitle className="text-2xl font-bold">{service.name}</CardTitle>
-                <CardDescription className="text-lg font-bold text-primary">
+                <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
+                <CardTitle className="text-2xl font-bold text-foreground">{service.name}</CardTitle>
+                <CardDescription className="text-lg font-semibold text-primary">
                   {service.price}
                 </CardDescription>
               </CardHeader>
@@ -212,19 +217,20 @@ const Index = () => {
 
       {/* Pricing Section */}
       <section className="container mx-auto px-4 py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/30 to-transparent -z-10"></div>
+        <div className="absolute inset-0 bg-secondary/20 -z-10"></div>
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Тарифы</h2>
-          <p className="text-xl text-muted-foreground font-medium">Выберите подходящий план</p>
+          <Badge className="mb-4 bg-primary/20 text-primary border-primary/30">Тарифы</Badge>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-foreground">Тарифы</h2>
+          <p className="text-xl text-muted-foreground">Выберите подходящий план</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {pricing.map((plan) => (
             <Card 
               key={plan.name} 
-              className={`relative border-2 hover:shadow-2xl transition-all hover:-translate-y-2 ${plan.badge ? 'border-primary shadow-2xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5' : 'hover:border-primary/30'}`}
+              className={`relative border hover:shadow-xl transition-all duration-500 hover:-translate-y-2 ${plan.badge ? 'border-primary/50 shadow-lg scale-105 bg-primary/5' : 'border-primary/20 hover:border-primary/40'}`}
             >
               {plan.badge && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent to-primary border-0 text-white px-6 py-1.5 text-sm font-bold shadow-lg">
+                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground border-0 px-6 py-1.5 text-sm font-bold shadow-md">
                   ⭐ {plan.badge}
                 </Badge>
               )}
@@ -270,8 +276,11 @@ const Index = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-gradient-to-r from-primary via-accent to-primary text-primary-foreground py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6bS02MCAwYzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
+      <section className="bg-primary text-primary-foreground py-24 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-accent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary rounded-full blur-3xl"></div>
+        </div>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {stats.map((stat) => (
@@ -285,14 +294,16 @@ const Index = () => {
       </section>
 
       {/* Reviews Section */}
-      <section className="container mx-auto px-4 py-24">
+      <section className="container mx-auto px-4 py-24 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(74,222,128,0.06),transparent_70%)] -z-10"></div>
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Отзывы</h2>
-          <p className="text-xl text-muted-foreground font-medium">Что говорят наши клиенты</p>
+          <Badge className="mb-4 bg-accent/20 text-accent-foreground border-accent/30">Отзывы клиентов</Badge>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-foreground">Отзывы</h2>
+          <p className="text-xl text-muted-foreground">Что говорят наши клиенты</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {reviews.map((review, idx) => (
-            <Card key={idx} className="hover:shadow-2xl transition-all hover:-translate-y-1 border-2 hover:border-accent/50 bg-gradient-to-br from-white to-accent/5">
+            <Card key={idx} className="hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border border-primary/20 hover:border-primary/40 bg-card backdrop-blur-sm">
               <CardHeader>
                 <div className="flex gap-1 mb-2">
                   {Array.from({ length: review.star }).map((_, i) => (
@@ -314,9 +325,10 @@ const Index = () => {
 
       {/* Contact Section */}
       <section className="container mx-auto px-4 py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 to-transparent -z-10"></div>
+        <div className="absolute inset-0 bg-secondary/30 -z-10"></div>
         <div className="max-w-2xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Свяжитесь с нами</h2>
+          <Badge className="mb-4 bg-primary/20 text-primary border-primary/30">Контакты</Badge>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">Свяжитесь с нами</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-center gap-3 text-lg">
               <Icon name="Phone" size={24} className="text-primary" />
@@ -335,18 +347,27 @@ const Index = () => {
               <span>Владивосток</span>
             </div>
           </div>
-          <Button size="lg" className="text-lg px-16 py-7 mt-8 bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all font-bold">
+          <Button size="lg" className="text-lg px-16 py-7 mt-8 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl hover:scale-105 transition-all font-semibold">
             Забронировать место
           </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-foreground via-primary/20 to-foreground text-background py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE2YzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6bS02MCAwYzAtNi42MjcgNS4zNzMtMTIgMTItMTJzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTItMTItNS4zNzMtMTItMTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
+      <footer className="bg-foreground/95 text-background py-16 relative overflow-hidden border-t-4 border-primary">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <p className="text-2xl font-bold mb-3">🐾 В гостях у Маши</p>
-          <p className="text-sm opacity-90">© 2026 Все права защищены</p>
+          <div className="flex justify-center mb-4">
+            <img 
+              src="https://cdn.poehali.dev/files/freepik__-__23969.png" 
+              alt="В гостях у Маши" 
+              className="w-16 h-16 object-contain opacity-90"
+            />
+          </div>
+          <p className="text-xl font-bold mb-3">В гостях у Маши</p>
+          <p className="text-sm opacity-80 mb-4">Натуральная забота о ваших питомцах</p>
+          <div className="h-px w-32 mx-auto bg-primary/40 mb-4"></div>
+          <p className="text-xs opacity-70">© 2026 Все права защищены</p>
         </div>
       </footer>
     </div>
