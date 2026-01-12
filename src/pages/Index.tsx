@@ -139,6 +139,13 @@ const Index = () => {
       <section className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/10 -z-10"></div>
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="https://cdn.poehali.dev/files/freepik__-__23969.png" 
+              alt="В гостях у Маши" 
+              className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+            />
+          </div>
           <div className="inline-block">
             <Badge className="text-sm px-6 py-2 mb-6 bg-gradient-to-r from-primary to-accent border-0">🐾 Профессиональный уход</Badge>
           </div>
