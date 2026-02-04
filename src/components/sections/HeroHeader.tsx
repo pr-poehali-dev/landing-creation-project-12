@@ -21,7 +21,6 @@ const HeroHeader = () => {
       </header>
 
       <div className="flex-1 flex items-center justify-center px-4 pt-24 pb-16 bg-gradient-to-b from-background via-background to-card relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/fd7fce9b-ed2e-4d90-bda0-1e9acdd60772.jpg')] bg-cover bg-center opacity-10"></div>
         
         <div className="container mx-auto text-center relative z-10 max-w-4xl">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground animate-fade-in">
