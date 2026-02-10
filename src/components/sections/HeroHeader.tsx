@@ -7,6 +7,16 @@ const HeroHeader = () => {
     statsSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToServices = () => {
+    const servicesSection = document.querySelector('#services');
+    servicesSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToContact = () => {
+    const contactSection = document.querySelector('#contact');
+    contactSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col">
       <header className="absolute top-0 left-0 right-0 z-50 py-6 px-4">
@@ -41,11 +51,11 @@ const HeroHeader = () => {
             Владивосток, Дальний Восток | Звук, свет, LED-экраны, сцены
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-scale-in">
-            <Button size="lg" className="text-lg bg-accent hover:bg-accent/90">
+            <Button size="lg" className="text-lg bg-accent hover:bg-accent/90" onClick={scrollToContact}>
               <Icon name="MessageCircle" className="mr-2" size={20} />
               Получить расчет
             </Button>
-            <Button size="lg" variant="outline" className="text-lg border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+            <Button size="lg" variant="outline" className="text-lg border-primary text-primary hover:bg-primary hover:text-primary-foreground" onClick={scrollToServices}>
               Портфолио
             </Button>
           </div>
