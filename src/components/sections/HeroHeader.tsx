@@ -2,6 +2,11 @@ import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 
 const HeroHeader = () => {
+  const scrollToStats = () => {
+    const statsSection = document.querySelector('#statistics');
+    statsSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col">
       <header className="absolute top-0 left-0 right-0 z-50 py-6 px-4">
@@ -56,9 +61,13 @@ const HeroHeader = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <button 
+          onClick={scrollToStats}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer hover:text-accent transition-colors"
+          aria-label="Прокрутить вниз"
+        >
           <Icon name="ChevronDown" size={32} className="text-primary" />
-        </div>
+        </button>
       </div>
     </section>
   );
