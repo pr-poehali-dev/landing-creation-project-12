@@ -26,7 +26,7 @@ const HeroHeader = () => {
         </div>
       </header>
 
-      <div className="flex-1 flex items-center justify-center px-4 pt-24 pb-16 bg-gradient-to-b from-background via-background to-card relative overflow-hidden">
+      <div className="flex-1 flex items-center justify-center px-4 pt-24 pb-8 bg-gradient-to-b from-background via-background to-card relative overflow-hidden">
         
         <div className="container mx-auto text-center relative z-10 max-w-4xl">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground animate-fade-in">
