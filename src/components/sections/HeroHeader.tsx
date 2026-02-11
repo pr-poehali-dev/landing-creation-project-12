@@ -25,6 +25,11 @@ const HeroHeader = () => {
       <div className="flex-1 flex items-center justify-center px-4 pt-24 pb-8 bg-gradient-to-b from-background via-background to-card relative overflow-hidden">
         
         <div className="container mx-auto text-center relative z-10 max-w-4xl">
+          <img 
+            src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/7c47876a-e0ae-41dc-9c50-c2d65c4a8182.png" 
+            alt="Протэк" 
+            className="w-64 md:w-80 mx-auto mb-8 animate-fade-in"
+          />
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground animate-fade-in">
             Техническое обеспечение мероприятий под ключ
           </h1>
