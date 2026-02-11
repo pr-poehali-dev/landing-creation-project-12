@@ -113,15 +113,6 @@ const TestimonialsAndFAQ = () => {
                 Да, мы выезжаем в любую точку Дальнего Востока. Стоимость доставки рассчитывается индивидуально в зависимости от расстояния.
               </AccordionContent>
             </AccordionItem>
-
-            <AccordionItem value="faq-7" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
-                ❓ Какие способы оплаты вы принимаете?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                Работаем по безналичному расчету. Для юридических лиц — перевод по счету с НДС 5%. Стандартная схема: 50% предоплата, 50% после мероприятия.
-              </AccordionContent>
-            </AccordionItem>
           </Accordion>
 
           <div className="text-center mt-12">
