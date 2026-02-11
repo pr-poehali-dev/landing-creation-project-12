@@ -111,8 +111,9 @@ const ContactFooter = () => {
         </div>
       </section>
 
-      <footer className="py-16 px-4 bg-slate-950 border-t border-slate-800">
-        <div className="container mx-auto">
+      <footer className="py-16 px-4 bg-gradient-to-b from-slate-900 via-slate-950 to-black border-t border-primary/20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 pointer-events-none"></div>
+        <div className="container mx-auto relative z-10">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
               <img 
