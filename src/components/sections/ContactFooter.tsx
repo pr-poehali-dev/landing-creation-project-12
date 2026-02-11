@@ -111,7 +111,7 @@ const ContactFooter = () => {
         </div>
       </section>
 
-      <footer className="py-16 px-4 bg-card border-t">
+      <footer className="py-16 px-4 bg-slate-950 border-t border-slate-800">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
