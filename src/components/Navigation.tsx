@@ -5,12 +5,30 @@ import Icon from "@/components/ui/icon";
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
+
+      const sections = ['#statistics', '#services', '#testimonials', '#contact'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const sectionId of sections) {
+        const section = document.querySelector(sectionId);
+        if (section) {
+          const sectionTop = (section as HTMLElement).offsetTop;
+          const sectionHeight = (section as HTMLElement).offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -52,9 +70,16 @@ const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-foreground hover:text-accent transition-colors font-medium"
+                className={`transition-colors font-medium relative ${
+                  activeSection === item.id 
+                    ? 'text-accent' 
+                    : 'text-foreground hover:text-accent'
+                }`}
               >
                 {item.label}
+                {activeSection === item.id && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full" />
+                )}
               </button>
             ))}
             <Button 
@@ -87,7 +112,11 @@ const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left text-foreground hover:text-accent transition-colors font-medium py-2"
+                className={`block w-full text-left transition-colors font-medium py-2 ${
+                  activeSection === item.id 
+                    ? 'text-accent' 
+                    : 'text-foreground hover:text-accent'
+                }`}
               >
                 {item.label}
               </button>
