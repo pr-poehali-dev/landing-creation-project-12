@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const ContactFooter = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +19,27 @@ const ContactFooter = () => {
     eventType: "",
     message: "",
   });
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => {
+      if (footerRef.current) {
+        observer.unobserve(footerRef.current);
+      }
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,8 +132,9 @@ const ContactFooter = () => {
         </div>
       </section>
 
-      <footer className="py-16 px-4 bg-gradient-to-b from-slate-900 via-slate-950 to-black border-t border-primary/20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 pointer-events-none"></div>
+      <footer ref={footerRef} className="py-16 px-4 bg-gradient-to-b from-slate-900 via-slate-950 to-black border-t border-primary/20 relative overflow-hidden">
+        <div className={`absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 pointer-events-none transition-opacity duration-1000 ${isFooterVisible ? 'opacity-100 animate-pulse' : 'opacity-50'}`}></div>
+        <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-accent to-transparent transition-opacity duration-1000 ${isFooterVisible ? 'opacity-100' : 'opacity-0'}`}></div>
         <div className="container mx-auto relative z-10">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
