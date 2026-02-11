@@ -3,11 +3,6 @@ import Icon from "@/components/ui/icon";
 import Navigation from "@/components/Navigation";
 
 const HeroHeader = () => {
-  const scrollToStats = () => {
-    const statsSection = document.querySelector('#statistics');
-    statsSection?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const scrollToPortfolio = () => {
     const portfolioSection = document.querySelector('#portfolio');
     portfolioSection?.scrollIntoView({ behavior: 'smooth' });
@@ -53,14 +48,6 @@ const HeroHeader = () => {
 
           </div>
         </div>
-        
-        <button 
-          onClick={scrollToStats}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer hover:text-accent transition-colors"
-          aria-label="Прокрутить вниз"
-        >
-          <Icon name="ChevronDown" size={32} className="text-primary" />
-        </button>
       </div>
     </section>
   );
