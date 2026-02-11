@@ -115,7 +115,7 @@ const ContactFooter = () => {
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
-              <div className="text-2xl font-bold text-primary mb-4">Pacific Protech</div>
+              <div className="text-2xl font-bold text-primary mb-4">Pacific Protec</div>
               <p className="text-secondary italic mb-4">«Создаем события своими руками»</p>
               <p className="text-sm text-muted-foreground">
                 Профессиональное техническое обеспечение мероприятий во Владивостоке и на Дальнем Востоке.
@@ -177,7 +177,7 @@ const ContactFooter = () => {
           </div>
 
           <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-            <p>© 2026 Pacific Protech. Все права защищены.</p>
+            <p>© 2026 Pacific Protec. Все права защищены.</p>
             <p>ООО "Пасифик Протек" | ИНН 2543XXXXXX</p>
           </div>
         </div>
