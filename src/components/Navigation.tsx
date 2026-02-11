@@ -11,7 +11,7 @@ const Navigation = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
 
-      const sections = ['#statistics', '#services', '#testimonials', '#contact'];
+      const sections = ['#statistics', '#services', '#portfolio', '#testimonials', '#contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -42,6 +42,7 @@ const Navigation = () => {
   const navItems = [
     { id: '#statistics', label: 'О нас' },
     { id: '#services', label: 'Услуги' },
+    { id: '#portfolio', label: 'Портфолио' },
     { id: '#testimonials', label: 'Отзывы' },
     { id: '#contact', label: 'Контакты' },
   ];
