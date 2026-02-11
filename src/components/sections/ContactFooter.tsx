@@ -115,7 +115,11 @@ const ContactFooter = () => {
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
-              <div className="text-2xl font-bold text-primary mb-4">Pacific Protec</div>
+              <img 
+                src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/7c47876a-e0ae-41dc-9c50-c2d65c4a8182.png" 
+                alt="Протэк" 
+                className="h-16 w-auto mb-4"
+              />
               <p className="text-secondary italic mb-4">«Создаем события своими руками»</p>
               <p className="text-sm text-muted-foreground">
                 Профессиональное техническое обеспечение мероприятий во Владивостоке и на Дальнем Востоке.
