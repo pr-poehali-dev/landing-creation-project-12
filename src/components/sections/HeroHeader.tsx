@@ -8,9 +8,9 @@ const HeroHeader = () => {
     statsSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToServices = () => {
-    const servicesSection = document.querySelector('#services');
-    servicesSection?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToPortfolio = () => {
+    const portfolioSection = document.querySelector('#portfolio');
+    portfolioSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const scrollToContact = () => {
@@ -41,7 +41,7 @@ const HeroHeader = () => {
               <Icon name="MessageCircle" className="mr-2" size={20} />
               Получить расчет
             </Button>
-            <Button size="lg" variant="outline" className="text-lg border-primary text-primary hover:bg-primary hover:text-primary-foreground" onClick={scrollToServices}>
+            <Button size="lg" variant="outline" className="text-lg border-primary text-primary hover:bg-primary hover:text-primary-foreground" onClick={scrollToPortfolio}>
               Портфолио
             </Button>
           </div>
