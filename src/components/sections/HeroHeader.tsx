@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import Navigation from "@/components/Navigation";
 
 const HeroHeader = () => {
   const scrollToStats = () => {
@@ -19,27 +20,7 @@ const HeroHeader = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col">
-      <header className="absolute top-0 left-0 right-0 z-50 py-6 px-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <img 
-              src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/6da9127b-f4f0-49d3-aad8-4bb3c81734cb.jpg" 
-              alt="Pacific Protech" 
-              className="h-12 w-auto"
-            />
-          </div>
-          <div className="flex gap-6 items-center">
-            <a href="tel:+79089925030" className="flex items-center gap-2 text-primary hover:text-accent transition-colors">
-              <Icon name="Phone" size={18} />
-              <span className="hidden md:inline">+7 (908) 992-50-30</span>
-            </a>
-            <a href="mailto:ppt@pmvl.ru" className="flex items-center gap-2 text-primary hover:text-accent transition-colors">
-              <Icon name="Mail" size={18} />
-              <span className="hidden md:inline">ppt@pmvl.ru</span>
-            </a>
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
       <div className="flex-1 flex items-center justify-center px-4 pt-24 pb-8 bg-gradient-to-b from-background via-background to-card relative overflow-hidden">
         
