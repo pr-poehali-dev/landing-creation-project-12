@@ -244,7 +244,14 @@ const MainSections = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" className="bg-accent hover:bg-accent/90">
+            <Button 
+              size="lg" 
+              className="bg-accent hover:bg-accent/90"
+              onClick={() => {
+                const contactSection = document.querySelector('#contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Начать работу <Icon name="ArrowRight" className="ml-2" size={20} />
             </Button>
           </div>
