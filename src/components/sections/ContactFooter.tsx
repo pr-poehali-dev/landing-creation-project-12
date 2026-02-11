@@ -115,7 +115,7 @@ const ContactFooter = () => {
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
-              <div className="text-2xl font-bold text-primary mb-4">Пасифик Протэк</div>
+              <div className="text-2xl font-bold text-primary mb-4">Pacific Protech</div>
               <p className="text-secondary italic mb-4">«Создаем события своими руками»</p>
               <p className="text-sm text-muted-foreground">
                 Профессиональное техническое обеспечение мероприятий во Владивостоке и на Дальнем Востоке.
@@ -168,27 +168,17 @@ const ContactFooter = () => {
 
               <div className="mt-6">
                 <p className="text-sm font-semibold mb-3">Мы в соцсетях:</p>
-                <div className="flex gap-3">
-                  <a href="https://t.me/protechvl" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent hover:text-primary-foreground flex items-center justify-center transition-colors group" title="Telegram">
-                    <Icon name="Send" size={18} className="text-primary group-hover:text-primary-foreground" />
-                  </a>
-                  <a href="https://vk.com/pacificprotech" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent hover:text-primary-foreground flex items-center justify-center transition-colors group" title="VKontakte">
-                    <span className="text-primary group-hover:text-primary-foreground font-bold text-sm">VK</span>
-                  </a>
-                  <a href="https://wa.me/79089925030" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent hover:text-primary-foreground flex items-center justify-center transition-colors group" title="WhatsApp">
-                    <Icon name="MessageCircle" size={18} className="text-primary group-hover:text-primary-foreground" />
-                  </a>
-                  <a href="https://instagram.com/pacificprotech" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent hover:text-primary-foreground flex items-center justify-center transition-colors group" title="Instagram">
-                    <Icon name="Instagram" size={18} className="text-primary group-hover:text-primary-foreground" />
-                  </a>
-                </div>
+                <a href="https://t.me/protechvl" className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors">
+                  <Icon name="Send" size={20} />
+                  <span className="text-sm">Telegram</span>
+                </a>
               </div>
             </div>
           </div>
 
           <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-<p>© 2026 Пасифик Протэк. Все права защищены.</p>
-            <p>ООО "Пасифик Протэк" | ИНН 2543XXXXXX</p>
+            <p>© 2026 Pacific Protech. Все права защищены.</p>
+            <p>ООО "Пасифик Протек" | ИНН 2543XXXXXX</p>
           </div>
         </div>
       </footer>
