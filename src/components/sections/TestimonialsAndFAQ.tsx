@@ -105,15 +105,6 @@ const TestimonialsAndFAQ = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="faq-5" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
-                ❓ Можно ли отменить или перенести заказ?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                Да, возможно. Если отмена происходит за 7+ дней до мероприятия, мы возвращаем предоплату полностью. При отмене за 3-6 дней — 50% предоплаты. Менее чем за 3 дня — предоплата не возвращается (детали в договоре).
-              </AccordionContent>
-            </AccordionItem>
-
             <AccordionItem value="faq-6" className="border border-primary/20 rounded-lg px-6">
               <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                 ❓ Работаете ли вы за пределами Владивостока?
