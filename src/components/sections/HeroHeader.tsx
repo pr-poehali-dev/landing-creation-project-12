@@ -48,7 +48,7 @@ const HeroHeader = () => {
             Техническое обеспечение мероприятий под ключ
           </h1>
           <p className="text-xl md:text-2xl text-secondary mb-8 animate-fade-in">
-            Звук, свет, LED-экраны, сцены
+            Звуковое и световое оборудование, LED-экраны, сценические конструкции, шатры
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-scale-in">
             <Button size="lg" className="text-lg bg-accent hover:bg-accent/90" onClick={scrollToContact}>
