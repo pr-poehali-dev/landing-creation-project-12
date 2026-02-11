@@ -41,9 +41,44 @@ const ContactFooter = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const response = await fetch('https://functions.poehali.dev/2309ba17-4ede-49a6-b3d3-603168ba5fed', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          message: `Тип мероприятия: ${formData.eventType || 'Не указан'}\n\n${formData.message || 'Нет дополнительных комментариев'}`
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', phone: '', eventType: '', message: '' });
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -96,9 +131,25 @@ const ContactFooter = () => {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="text-base"
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-lg py-6">
-                  Отправить заявку
+                <Button 
+                  type="submit" 
+                  className="w-full bg-accent hover:bg-accent/90 text-lg py-6"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
                 </Button>
+                
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-500 text-center">
+                    ✓ Заявка отправлена! Мы свяжемся с вами в ближайшее время.
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-center">
+                    ✗ Ошибка отправки. Попробуйте позвонить нам напрямую.
+                  </div>
+                )}
               </form>
 
               <div className="mt-8 pt-8 border-t">
