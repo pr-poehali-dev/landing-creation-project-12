@@ -4,7 +4,7 @@ import Icon from '@/components/ui/icon';
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все');
 
-  const categories = ['Все', 'Корпоративы', 'Государственные мероприятия', 'Фестивали', 'Конференции', 'Выездное обслуживание'];
+  const categories = ['Все', 'Корпоративы', 'Государственные мероприятия', 'Фестивали', 'Конференции'];
 
   const projects = [
     {
