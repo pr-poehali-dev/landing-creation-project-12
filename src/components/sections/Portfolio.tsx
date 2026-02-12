@@ -4,7 +4,7 @@ import Icon from '@/components/ui/icon';
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все');
 
-  const categories = ['Все', 'Корпоративы', 'Государственные мероприятия', 'Дни рождения', 'Конференции', 'Выездное обслуживание'];
+  const categories = ['Все', 'Корпоративы', 'Государственные мероприятия', 'Фестивали', 'Конференции', 'Выездное обслуживание'];
 
   const projects = [
     {
@@ -42,9 +42,9 @@ const Portfolio = () => {
     {
       id: 5,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/d4e877f9-22f2-4716-a3fa-4b369fdea031.jpg',
-      title: 'День рождения на природе',
-      category: 'Дни рождения',
-      guests: 50,
+      title: 'Музыкальный фестиваль V-ROX',
+      category: 'Фестивали',
+      guests: 15000,
       date: 'Июль 2025'
     },
     {
@@ -90,10 +90,10 @@ const Portfolio = () => {
     {
       id: 11,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/d4e877f9-22f2-4716-a3fa-4b369fdea031.jpg',
-      title: 'Юбилей 50 лет',
-      category: 'Дни рождения',
-      guests: 60,
-      date: 'Февраль 2025'
+      title: 'Фестиваль уличной еды',
+      category: 'Фестивали',
+      guests: 8000,
+      date: 'Июнь 2025'
     },
     {
       id: 12,
@@ -130,17 +130,17 @@ const Portfolio = () => {
     {
       id: 16,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/242d0a50-dccc-4d66-99eb-15241c6df5a6.jpg',
-      title: 'Детский день рождения',
-      category: 'Дни рождения',
-      guests: 30,
+      title: 'Фестиваль красок Холи',
+      category: 'Фестивали',
+      guests: 5000,
       date: 'Май 2025'
     },
     {
       id: 17,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/d4e877f9-22f2-4716-a3fa-4b369fdea031.jpg',
-      title: 'Золотая свадьба',
-      category: 'Дни рождения',
-      guests: 55,
+      title: 'Джазовый фестиваль на набережной',
+      category: 'Фестивали',
+      guests: 3000,
       date: 'Август 2025'
     },
     {
@@ -186,10 +186,10 @@ const Portfolio = () => {
     {
       id: 23,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/d4e877f9-22f2-4716-a3fa-4b369fdea031.jpg',
-      title: 'День рождения 30 лет',
-      category: 'Дни рождения',
-      guests: 45,
-      date: 'Март 2025'
+      title: 'Фестиваль света и огня',
+      category: 'Фестивали',
+      guests: 12000,
+      date: 'Декабрь 2024'
     },
     {
       id: 24,
@@ -226,10 +226,10 @@ const Portfolio = () => {
     {
       id: 28,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/242d0a50-dccc-4d66-99eb-15241c6df5a6.jpg',
-      title: 'День рождения на яхте',
-      category: 'Дни рождения',
-      guests: 35,
-      date: 'Август 2025'
+      title: 'Фестиваль вина и гастрономии',
+      category: 'Фестивали',
+      guests: 6000,
+      date: 'Сентябрь 2025'
     },
     {
       id: 29,
