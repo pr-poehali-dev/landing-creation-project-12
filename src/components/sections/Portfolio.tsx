@@ -4,7 +4,7 @@ import Icon from '@/components/ui/icon';
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все');
 
-  const categories = ['Все', 'Корпоративы', 'Свадьбы', 'Дни рождения', 'Конференции', 'Выездное обслуживание'];
+  const categories = ['Все', 'Корпоративы', 'Государственные мероприятия', 'Дни рождения', 'Конференции', 'Выездное обслуживание'];
 
   const projects = [
     {
@@ -18,10 +18,10 @@ const Portfolio = () => {
     {
       id: 2,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/d4e877f9-22f2-4716-a3fa-4b369fdea031.jpg',
-      title: 'Свадьба на берегу океана',
-      category: 'Свадьбы',
-      guests: 80,
-      date: 'Август 2025'
+      title: 'День города Владивостока',
+      category: 'Государственные мероприятия',
+      guests: 5000,
+      date: 'Июль 2025'
     },
     {
       id: 3,
@@ -58,9 +58,9 @@ const Portfolio = () => {
     {
       id: 7,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/242d0a50-dccc-4d66-99eb-15241c6df5a6.jpg',
-      title: 'Свадебный банкет в ресторане',
-      category: 'Свадьбы',
-      guests: 100,
+      title: 'Празднование Дня России',
+      category: 'Государственные мероприятия',
+      guests: 3000,
       date: 'Июнь 2025'
     },
     {
@@ -98,10 +98,10 @@ const Portfolio = () => {
     {
       id: 12,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/2f6a90e8-ac4c-4c11-8cf9-ea92341b2d23.jpg',
-      title: 'Свадьба в загородном клубе',
-      category: 'Свадьбы',
-      guests: 110,
-      date: 'Июль 2025'
+      title: 'День молодежи Приморского края',
+      category: 'Государственные мероприятия',
+      guests: 2500,
+      date: 'Июнь 2025'
     },
     {
       id: 13,
@@ -170,9 +170,9 @@ const Portfolio = () => {
     {
       id: 21,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/2f6a90e8-ac4c-4c11-8cf9-ea92341b2d23.jpg',
-      title: 'Торжественная свадьба',
-      category: 'Свадьбы',
-      guests: 130,
+      title: 'День края и ВЭФ',
+      category: 'Государственные мероприятия',
+      guests: 8000,
       date: 'Сентябрь 2025'
     },
     {
@@ -210,9 +210,9 @@ const Portfolio = () => {
     {
       id: 26,
       image: 'https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/d4e877f9-22f2-4716-a3fa-4b369fdea031.jpg',
-      title: 'Камерная свадьба',
-      category: 'Свадьбы',
-      guests: 40,
+      title: 'День Победы в центре города',
+      category: 'Государственные мероприятия',
+      guests: 10000,
       date: 'Май 2025'
     },
     {
