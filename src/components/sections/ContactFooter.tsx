@@ -201,7 +201,7 @@ const ContactFooter = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-lg mb-4">Услуги</h4>
+              <h4 className="font-bold text-lg mb-4 text-white">Услуги</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="#" className="hover:text-primary transition-colors">Звуковое оборудование</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Световое оборудование</a></li>
@@ -213,7 +213,7 @@ const ContactFooter = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-lg mb-4">Информация</h4>
+              <h4 className="font-bold text-lg mb-4 text-white">Информация</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="#" className="hover:text-primary transition-colors">О компании</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Портфолио</a></li>
@@ -224,7 +224,7 @@ const ContactFooter = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-lg mb-4">Контакты</h4>
+              <h4 className="font-bold text-lg mb-4 text-white">Контакты</h4>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
                   <Icon name="Phone" size={16} className="text-primary mt-1" />
