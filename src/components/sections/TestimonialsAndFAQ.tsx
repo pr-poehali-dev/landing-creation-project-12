@@ -70,7 +70,7 @@ const TestimonialsAndFAQ = () => {
 
           <Accordion type="single" collapsible className="space-y-4">
             <AccordionItem value="faq-1" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+              <AccordionTrigger className="text-lg font-bold text-foreground hover:no-underline">
                 ❓ За какой срок нужно бронировать оборудование?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
@@ -79,7 +79,7 @@ const TestimonialsAndFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="faq-2" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+              <AccordionTrigger className="text-lg font-bold text-foreground hover:no-underline">
                 ❓ Входит ли доставка и монтаж в стоимость?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
@@ -88,7 +88,7 @@ const TestimonialsAndFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="faq-3" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+              <AccordionTrigger className="text-lg font-bold text-foreground hover:no-underline">
                 ❓ Работают ли ваши специалисты на мероприятии?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
@@ -97,7 +97,7 @@ const TestimonialsAndFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="faq-4" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+              <AccordionTrigger className="text-lg font-bold text-foreground hover:no-underline">
                 ❓ Что делать, если оборудование сломается во время мероприятия?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
@@ -106,7 +106,7 @@ const TestimonialsAndFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="faq-6" className="border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+              <AccordionTrigger className="text-lg font-bold text-foreground hover:no-underline">
                 ❓ Работаете ли вы за пределами Владивостока?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
