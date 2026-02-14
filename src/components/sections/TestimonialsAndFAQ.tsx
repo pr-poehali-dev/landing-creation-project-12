@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,27 +10,29 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+const API_URL = "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01";
+
+const fallbackTestimonials = [
+  {
+    id: 0,
+    rating: 5,
+    quote: "Сотрудничаем с Пасифик Протэк уже второй год. Обеспечивали наш бизнес-форум на 500 участников — всё прошло безупречно.",
+    name: "Алексей Морозов",
+    position: "Организатор мероприятий",
+  },
+];
+
 const TestimonialsAndFAQ = () => {
-  const testimonials = [
-    {
-      rating: 5,
-      quote: "Сотрудничаем с Пасифик Протэк уже второй год. Обеспечивали наш бизнес-форум на 500 участников — всё прошло безупречно. Профессиональная команда, современное оборудование, пунктуальность. Рекомендую!",
-      name: "Алексей Морозов",
-      position: "Организатор мероприятий, ООО \"Дальневосточные конференции\"",
-    },
-    {
-      rating: 5,
-      quote: "Заказывали технику для корпоратива. Особенно понравился индивидуальный подход: выехали заранее, всё спланировали, провели репетицию. На мероприятии работали два специалиста — звук и свет были на высоте. Спасибо за праздник!",
-      name: "Екатерина Соколова",
-      position: "Event-менеджер",
-    },
-    {
-      rating: 5,
-      quote: "Арендовали LED-экран и звуковую систему для летней вечеринки. Всё привезли вовремя, быстро установили, настроили. Цены адекватные, качество отличное. Будем обращаться ещё!",
-      name: "Дмитрий Волков",
-      position: "Директор кафе \"Маяк\"",
-    },
-  ];
+  const [testimonials, setTestimonials] = useState(fallbackTestimonials);
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) setTestimonials(data);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <>
@@ -41,8 +44,8 @@ const TestimonialsAndFAQ = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, idx) => (
-              <Card key={idx} className="testimonial-card border-primary/20">
+            {testimonials.map((testimonial) => (
+              <Card key={testimonial.id} className="testimonial-card border-primary/20">
                 <CardHeader>
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
