@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -45,13 +45,35 @@ const Admin = () => {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
   const [isAuthed, setIsAuthed] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>("testimonials");
+  const [loginLoading, setLoginLoading] = useState(false);
   const { toast } = useToast();
 
   const headers = { "Content-Type": "application/json", "X-Admin-Token": token };
 
-  const login = () => {
-    localStorage.setItem("admin_token", token);
-    setIsAuthed(true);
+  const handleAuthFail = useCallback(() => {
+    localStorage.removeItem("admin_token");
+    setIsAuthed(false);
+    toast({ title: "Сессия истекла, войдите снова", variant: "destructive" });
+  }, [toast]);
+
+  const login = async () => {
+    if (!token.trim()) { toast({ title: "Введите пароль", variant: "destructive" }); return; }
+    setLoginLoading(true);
+    try {
+      const res = await fetch(TESTIMONIALS_URL + "?all=true", {
+        headers: { "Content-Type": "application/json", "X-Admin-Token": token },
+      });
+      if (res.status === 401) {
+        toast({ title: "Неверный пароль", variant: "destructive" });
+        return;
+      }
+      localStorage.setItem("admin_token", token);
+      setIsAuthed(true);
+    } catch {
+      toast({ title: "Ошибка подключения", variant: "destructive" });
+    } finally {
+      setLoginLoading(false);
+    }
   };
 
   const logout = () => {
@@ -75,7 +97,9 @@ const Admin = () => {
               onChange={(e) => setToken(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && login()}
             />
-            <Button className="w-full" onClick={login}>Войти</Button>
+            <Button className="w-full" onClick={login} disabled={loginLoading}>
+              {loginLoading ? "Проверка..." : "Войти"}
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -113,15 +137,25 @@ const Admin = () => {
         </div>
 
         {activeTab === "testimonials" && (
-          <TestimonialsTab headers={headers} toast={toast} onAuthFail={() => setIsAuthed(false)} />
+          <TestimonialsTab headers={headers} toast={toast} onAuthFail={handleAuthFail} />
         )}
         {activeTab === "portfolio" && (
-          <PortfolioTab headers={headers} toast={toast} onAuthFail={() => setIsAuthed(false)} />
+          <PortfolioTab headers={headers} toast={toast} onAuthFail={handleAuthFail} />
         )}
       </div>
     </div>
   );
 };
+
+async function apiCall(url: string, options: RequestInit, onAuthFail: () => void): Promise<Response | null> {
+  try {
+    const res = await fetch(url, options);
+    if (res.status === 401) { onAuthFail(); return null; }
+    return res;
+  } catch {
+    return null;
+  }
+}
 
 function TestimonialsTab({ headers, toast, onAuthFail }: { headers: Record<string, string>; toast: ReturnType<typeof useToast>["toast"]; onAuthFail: () => void }) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -129,15 +163,16 @@ function TestimonialsTab({ headers, toast, onAuthFail }: { headers: Record<strin
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState({ name: "", position: "", quote: "", rating: 5 });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
-    try {
-      const res = await fetch(TESTIMONIALS_URL + "?all=true", { headers });
-      if (res.status === 401) { onAuthFail(); toast({ title: "Неверный токен", variant: "destructive" }); return; }
+    const res = await apiCall(TESTIMONIALS_URL + "?all=true", { headers }, onAuthFail);
+    if (res) {
       setTestimonials(await res.json());
-    } catch { toast({ title: "Ошибка загрузки", variant: "destructive" }); }
-    finally { setLoading(false); }
-  };
+    } else {
+      toast({ title: "Ошибка загрузки", variant: "destructive" });
+    }
+    setLoading(false);
+  }, [headers, onAuthFail, toast]);
 
   useEffect(() => { fetchData(); }, []);
 
@@ -151,33 +186,30 @@ function TestimonialsTab({ headers, toast, onAuthFail }: { headers: Record<strin
 
   const save = async () => {
     if (!form.name.trim() || !form.quote.trim()) { toast({ title: "Заполните имя и текст отзыва", variant: "destructive" }); return; }
-    try {
-      if (editingId) {
-        await fetch(TESTIMONIALS_URL, { method: "PUT", headers, body: JSON.stringify({ id: editingId, ...form }) });
-        toast({ title: "Отзыв обновлён" });
-      } else {
-        await fetch(TESTIMONIALS_URL, { method: "POST", headers, body: JSON.stringify(form) });
-        toast({ title: "Отзыв добавлен" });
-      }
+    const res = await apiCall(TESTIMONIALS_URL, {
+      method: editingId ? "PUT" : "POST",
+      headers,
+      body: JSON.stringify(editingId ? { id: editingId, ...form } : form),
+    }, onAuthFail);
+    if (res) {
+      toast({ title: editingId ? "Отзыв обновлён" : "Отзыв добавлен" });
       resetForm();
       fetchData();
-    } catch { toast({ title: "Ошибка сохранения", variant: "destructive" }); }
+    }
   };
 
   const toggleVisibility = async (t: Testimonial) => {
-    try {
-      await fetch(TESTIMONIALS_URL, { method: "PUT", headers, body: JSON.stringify({ id: t.id, is_visible: !t.is_visible }) });
-      fetchData();
-    } catch { toast({ title: "Ошибка", variant: "destructive" }); }
+    const res = await apiCall(TESTIMONIALS_URL, {
+      method: "PUT", headers,
+      body: JSON.stringify({ id: t.id, is_visible: !t.is_visible }),
+    }, onAuthFail);
+    if (res) fetchData();
   };
 
   const remove = async (id: number) => {
     if (!confirm("Удалить этот отзыв?")) return;
-    try {
-      await fetch(TESTIMONIALS_URL + "?id=" + id, { method: "DELETE", headers });
-      toast({ title: "Отзыв удалён" });
-      fetchData();
-    } catch { toast({ title: "Ошибка удаления", variant: "destructive" }); }
+    const res = await apiCall(TESTIMONIALS_URL + "?id=" + id, { method: "DELETE", headers }, onAuthFail);
+    if (res) { toast({ title: "Отзыв удалён" }); fetchData(); }
   };
 
   return (
@@ -257,15 +289,16 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState({ title: "", category: "", image: "", guests: 0, date: "" });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
-    try {
-      const res = await fetch(PORTFOLIO_URL + "?all=true", { headers });
-      if (res.status === 401) { onAuthFail(); toast({ title: "Неверный токен", variant: "destructive" }); return; }
+    const res = await apiCall(PORTFOLIO_URL + "?all=true", { headers }, onAuthFail);
+    if (res) {
       setProjects(await res.json());
-    } catch { toast({ title: "Ошибка загрузки", variant: "destructive" }); }
-    finally { setLoading(false); }
-  };
+    } else {
+      toast({ title: "Ошибка загрузки", variant: "destructive" });
+    }
+    setLoading(false);
+  }, [headers, onAuthFail, toast]);
 
   useEffect(() => { fetchData(); }, []);
 
@@ -279,33 +312,30 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
 
   const save = async () => {
     if (!form.title.trim() || !form.category.trim()) { toast({ title: "Заполните название и категорию", variant: "destructive" }); return; }
-    try {
-      if (editingId) {
-        await fetch(PORTFOLIO_URL, { method: "PUT", headers, body: JSON.stringify({ id: editingId, ...form }) });
-        toast({ title: "Проект обновлён" });
-      } else {
-        await fetch(PORTFOLIO_URL, { method: "POST", headers, body: JSON.stringify(form) });
-        toast({ title: "Проект добавлен" });
-      }
+    const res = await apiCall(PORTFOLIO_URL, {
+      method: editingId ? "PUT" : "POST",
+      headers,
+      body: JSON.stringify(editingId ? { id: editingId, ...form } : form),
+    }, onAuthFail);
+    if (res) {
+      toast({ title: editingId ? "Проект обновлён" : "Проект добавлен" });
       resetForm();
       fetchData();
-    } catch { toast({ title: "Ошибка сохранения", variant: "destructive" }); }
+    }
   };
 
   const toggleVisibility = async (p: Project) => {
-    try {
-      await fetch(PORTFOLIO_URL, { method: "PUT", headers, body: JSON.stringify({ id: p.id, is_visible: !p.is_visible }) });
-      fetchData();
-    } catch { toast({ title: "Ошибка", variant: "destructive" }); }
+    const res = await apiCall(PORTFOLIO_URL, {
+      method: "PUT", headers,
+      body: JSON.stringify({ id: p.id, is_visible: !p.is_visible }),
+    }, onAuthFail);
+    if (res) fetchData();
   };
 
   const remove = async (id: number) => {
     if (!confirm("Удалить этот проект?")) return;
-    try {
-      await fetch(PORTFOLIO_URL + "?id=" + id, { method: "DELETE", headers });
-      toast({ title: "Проект удалён" });
-      fetchData();
-    } catch { toast({ title: "Ошибка удаления", variant: "destructive" }); }
+    const res = await apiCall(PORTFOLIO_URL + "?id=" + id, { method: "DELETE", headers }, onAuthFail);
+    if (res) { toast({ title: "Проект удалён" }); fetchData(); }
   };
 
   return (

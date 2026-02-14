@@ -30,6 +30,9 @@ def handler(event, context):
     headers = event.get('headers') or {}
 
     if method == 'GET':
+        show_all = params.get('all', 'false') == 'true'
+        if show_all and not check_admin(headers):
+            return {'statusCode': 401, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'Unauthorized'})}
         return get_projects(params)
 
     if not check_admin(headers):
