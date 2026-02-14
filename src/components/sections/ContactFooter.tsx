@@ -120,7 +120,7 @@ const ContactFooter = () => {
                     <SelectItem value="corporate">Корпоративное мероприятие</SelectItem>
                     <SelectItem value="concert">Концерт / Фестиваль</SelectItem>
                     <SelectItem value="wedding">Свадьба / Частное мероприятие</SelectItem>
-                    <SelectItem value="government">Государственное мероприятие</SelectItem>
+                    <SelectItem value="government">Деловое мероприятие</SelectItem>
                     <SelectItem value="other">Другое мероприятие</SelectItem>
                   </SelectContent>
                 </Select>
