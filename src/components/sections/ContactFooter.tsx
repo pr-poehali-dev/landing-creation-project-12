@@ -117,7 +117,7 @@ const ContactFooter = () => {
                     <SelectValue placeholder="Тип мероприятия" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="corporate">Корпоратив</SelectItem>
+                    <SelectItem value="corporate">Корпоративное мероприятие</SelectItem>
                     <SelectItem value="concert">Концерт / Фестиваль</SelectItem>
                     <SelectItem value="wedding">Свадьба / Частное</SelectItem>
                     <SelectItem value="government">Государственное</SelectItem>
