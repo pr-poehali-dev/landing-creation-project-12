@@ -4,7 +4,7 @@ import urllib.request
 import urllib.parse
 
 def handler(event: dict, context) -> dict:
-    """Отправка заявки с сайта в Telegram"""
+    """Отправка заявки с сайта Pacific Protech в Telegram"""
     method = event.get('httpMethod', 'POST')
     
     if method == 'OPTIONS':
