@@ -21,7 +21,7 @@ def check_admin(headers):
     return token == ADMIN_TOKEN and ADMIN_TOKEN != ''
 
 def handler(event, context):
-    """API для управления портфолио: получение, создание, обновление, удаление проектов. v8"""
+    """API для управления портфолио: получение, создание, обновление, удаление проектов. v9"""
     if event.get('httpMethod') == 'OPTIONS':
         return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': ''}
 

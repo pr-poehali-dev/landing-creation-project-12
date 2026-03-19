@@ -21,7 +21,7 @@ def check_admin(headers):
     return token == ADMIN_TOKEN and ADMIN_TOKEN != ''
 
 def handler(event, context):
-    """API для управления отзывами: получение, создание, обновление, удаление. v9"""
+    """API для управления отзывами: получение, создание, обновление, удаление. v10"""
     if event.get('httpMethod') == 'OPTIONS':
         return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': ''}
 
