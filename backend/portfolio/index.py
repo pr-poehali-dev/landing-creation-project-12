@@ -108,7 +108,7 @@ def update_project(event):
 
     fields = []
     values = []
-    for key in ['title', 'category', 'image', 'guests', 'date', 'is_visible', 'sort_order']:
+    for key in ['title', 'category', 'guests', 'date', 'is_visible', 'sort_order']:
         if key in body:
             fields.append(key + " = %s")
             values.append(body[key])
@@ -119,6 +119,9 @@ def update_project(event):
         if body['images']:
             fields.append("image = %s")
             values.append(body['images'][0])
+    elif 'image' in body:
+        fields.append("image = %s")
+        values.append(body['image'])
 
     if not fields:
         return {'statusCode': 400, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'No fields to update'})}
