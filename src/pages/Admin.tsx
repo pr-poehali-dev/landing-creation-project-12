@@ -17,6 +17,7 @@ import {
 const AUTH_URL = "https://functions.poehali.dev/1521ec90-5416-4e69-be5f-5dca89ad5e9f";
 const TESTIMONIALS_URL = "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01";
 const PORTFOLIO_URL = "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7";
+const UPLOAD_URL = "https://functions.poehali.dev/738f209e-721e-4bbc-b3c9-1f30c6a6757a";
 
 interface Testimonial {
   id: number;
@@ -290,6 +291,7 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState({ title: "", category: "", image: "", guests: 0, date: "" });
+  const [uploading, setUploading] = useState(false);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -305,6 +307,35 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
   useEffect(() => { fetchData(); }, []);
 
   const resetForm = () => { setForm({ title: "", category: "", image: "", guests: 0, date: "" }); setEditingId(null); };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const res = await fetch(UPLOAD_URL, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ file: reader.result, name: file.name, content_type: file.type }),
+        });
+        if (res.status === 401) { onAuthFail(); return; }
+        const data = await res.json();
+        if (data.url) {
+          setForm((f) => ({ ...f, image: data.url }));
+          toast({ title: "Фото загружено" });
+        } else {
+          toast({ title: "Ошибка загрузки фото", variant: "destructive" });
+        }
+      } catch {
+        toast({ title: "Ошибка загрузки фото", variant: "destructive" });
+      } finally {
+        setUploading(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const startEdit = (p: Project) => {
     setEditingId(p.id);
@@ -360,7 +391,23 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
               </SelectContent>
             </Select>
           </div>
-          <Input placeholder="Ссылка на изображение" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} />
+          <div className="space-y-2">
+            <div className="flex gap-2">
+              <Input placeholder="Ссылка на изображение" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className="flex-1" />
+              <label className="cursor-pointer">
+                <Button type="button" variant="outline" disabled={uploading} asChild>
+                  <span>
+                    <Icon name={uploading ? "Loader" : "Upload"} size={16} className={`mr-1 ${uploading ? "animate-spin" : ""}`} />
+                    {uploading ? "Загрузка..." : "Загрузить фото"}
+                  </span>
+                </Button>
+                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+              </label>
+            </div>
+            {form.image && (
+              <img src={form.image} alt="preview" className="h-24 rounded-lg object-cover" />
+            )}
+          </div>
           <div className="grid md:grid-cols-2 gap-4">
             <Input type="number" placeholder="Кол-во гостей" value={form.guests || ""} onChange={(e) => setForm({ ...form, guests: parseInt(e.target.value) || 0 })} />
             <Input placeholder="Дата (напр. Декабрь 2025)" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
