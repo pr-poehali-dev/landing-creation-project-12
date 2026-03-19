@@ -1,4 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,12 +34,72 @@ interface Props {
   onAuthFail: () => void;
 }
 
+interface SortableCardProps {
+  project: Project;
+  onEdit: (p: Project) => void;
+  onToggle: (p: Project) => void;
+  onRemove: (id: number) => void;
+}
+
+function SortableCard({ project: p, onEdit, onToggle, onRemove }: SortableCardProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: p.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <Card className={!p.is_visible ? "opacity-50" : ""}>
+        <CardContent className="pt-6">
+          <div className="flex items-start justify-between gap-4">
+            <div
+              {...attributes}
+              {...listeners}
+              className="flex items-center cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors mt-1 shrink-0"
+              title="Перетащите для изменения порядка"
+            >
+              <Icon name="GripVertical" size={20} />
+            </div>
+            <div className="flex items-start gap-4 flex-1">
+              {(p.images?.[0] || p.image) && (
+                <img src={p.images?.[0] || p.image} alt={p.title} className="w-20 h-14 object-cover rounded-lg shrink-0" />
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-foreground truncate">{p.title}</div>
+                <div className="text-sm text-muted-foreground">{p.category}</div>
+                <div className="flex gap-3 text-xs text-muted-foreground mt-1">
+                  <span><Icon name="Calendar" size={12} className="inline mr-1" />{p.date}</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Switch checked={p.is_visible} onCheckedChange={() => onToggle(p)} />
+              <Button variant="ghost" size="icon" onClick={() => onEdit(p)}>
+                <Icon name="Pencil" size={16} />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={() => onRemove(p.id)} className="text-red-500 hover:text-red-600">
+                <Icon name="Trash2" size={16} />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState({ title: "", category: "", images: [] as string[], guests: 0, date: "" });
   const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -53,7 +128,6 @@ export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
         canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
         URL.revokeObjectURL(url);
         let result = canvas.toDataURL("image/jpeg", quality);
-        // если всё ещё больше 1МБ в base64 — жмём сильнее
         if (result.length > 1_400_000) {
           result = canvas.toDataURL("image/jpeg", 0.55);
         }
@@ -139,6 +213,28 @@ export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
     if (res) { toast({ title: "Проект удалён" }); fetchData(); }
   };
 
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = projects.findIndex((p) => p.id === active.id);
+    const newIndex = projects.findIndex((p) => p.id === over.id);
+    const reordered = arrayMove(projects, oldIndex, newIndex);
+    setProjects(reordered);
+
+    setSaving(true);
+    try {
+      const order = reordered.map((p, i) => ({ id: p.id, sort_order: i + 1 }));
+      await apiCall(PORTFOLIO_URL + "?reorder=true", {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({ order }),
+      }, onAuthFail);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <>
       <Card className="mb-8">
@@ -204,37 +300,30 @@ export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
       ) : projects.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">Проектов пока нет</div>
       ) : (
-        <div className="space-y-4">
-          {projects.map((p) => (
-            <Card key={p.id} className={!p.is_visible ? "opacity-50" : ""}>
-              <CardContent className="pt-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-4 flex-1">
-                    {(p.images?.[0] || p.image) && (
-                      <img src={p.images?.[0] || p.image} alt={p.title} className="w-20 h-14 object-cover rounded-lg shrink-0" />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="font-bold text-foreground truncate">{p.title}</div>
-                      <div className="text-sm text-muted-foreground">{p.category}</div>
-                      <div className="flex gap-3 text-xs text-muted-foreground mt-1">
-                        <span><Icon name="Calendar" size={12} className="inline mr-1" />{p.date}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <Switch checked={p.is_visible} onCheckedChange={() => toggleVisibility(p)} />
-                    <Button variant="ghost" size="icon" onClick={() => startEdit(p)}>
-                      <Icon name="Pencil" size={16} />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => remove(p.id)} className="text-red-500 hover:text-red-600">
-                      <Icon name="Trash2" size={16} />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <>
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm text-muted-foreground">
+              <Icon name="GripVertical" size={14} className="inline mr-1" />
+              Перетаскивайте карточки, чтобы изменить порядок
+            </p>
+            {saving && <span className="text-xs text-muted-foreground">Сохранение...</span>}
+          </div>
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={projects.map((p) => p.id)} strategy={verticalListSortingStrategy}>
+              <div className="space-y-4">
+                {projects.map((p) => (
+                  <SortableCard
+                    key={p.id}
+                    project={p}
+                    onEdit={startEdit}
+                    onToggle={toggleVisibility}
+                    onRemove={remove}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
+        </>
       )}
     </>
   );

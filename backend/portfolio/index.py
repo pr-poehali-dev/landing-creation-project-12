@@ -41,6 +41,8 @@ def handler(event, context):
     if method == 'POST':
         return create_project(event)
     elif method == 'PUT':
+        if params.get('reorder') == 'true':
+            return reorder_projects(event)
         return update_project(event)
     elif method == 'DELETE':
         return delete_project(params)
@@ -141,6 +143,22 @@ def update_project(event):
         if not row:
             return {'statusCode': 404, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'Not found'})}
         return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': json.dumps(serialize_row(row), ensure_ascii=False)}
+    finally:
+        conn.close()
+
+def reorder_projects(event):
+    body = json.loads(event.get('body', '{}'))
+    order = body.get('order', [])
+    if not order:
+        return {'statusCode': 400, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'order is required'})}
+
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            for item in order:
+                cur.execute("UPDATE portfolio SET sort_order = %s, updated_at = NOW() WHERE id = %s", (item['sort_order'], item['id']))
+            conn.commit()
+        return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': json.dumps({'success': True})}
     finally:
         conn.close()
 
