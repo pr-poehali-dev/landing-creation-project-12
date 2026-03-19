@@ -78,10 +78,6 @@ const Portfolio = () => {
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                   <div className="flex items-center gap-4 text-sm">
                     <div className="flex items-center gap-1">
-                      <Icon name="Users" size={16} />
-                      <span>{project.guests} гостей</span>
-                    </div>
-                    <div className="flex items-center gap-1">
                       <Icon name="Calendar" size={16} />
                       <span>{project.date}</span>
                     </div>

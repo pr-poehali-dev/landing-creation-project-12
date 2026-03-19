@@ -447,10 +447,7 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
               </div>
             )}
           </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            <Input type="number" placeholder="Кол-во гостей" value={form.guests || ""} onChange={(e) => setForm({ ...form, guests: parseInt(e.target.value) || 0 })} />
-            <Input placeholder="Дата (напр. Декабрь 2025)" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
-          </div>
+          <Input placeholder="Дата (напр. Декабрь 2025)" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
           <div className="flex gap-3">
             <Button onClick={save}>
               <Icon name={editingId ? "Save" : "Plus"} size={16} className="mr-1" />
@@ -479,7 +476,6 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
                       <div className="font-bold text-foreground truncate">{p.title}</div>
                       <div className="text-sm text-muted-foreground">{p.category}</div>
                       <div className="flex gap-3 text-xs text-muted-foreground mt-1">
-                        <span><Icon name="Users" size={12} className="inline mr-1" />{p.guests} гостей</span>
                         <span><Icon name="Calendar" size={12} className="inline mr-1" />{p.date}</span>
                       </div>
                     </div>
