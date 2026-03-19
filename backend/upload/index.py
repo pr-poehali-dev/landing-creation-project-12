@@ -15,7 +15,7 @@ CORS_HEADERS = {
 ADMIN_TOKEN = os.environ.get('ADMIN_TOKEN', '')
 
 def handler(event, context):
-    """Загрузка фото в S3 для портфолио"""
+    """Загрузка фото в S3 для портфолио. v2"""
     if event.get('httpMethod') == 'OPTIONS':
         return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': ''}
 
