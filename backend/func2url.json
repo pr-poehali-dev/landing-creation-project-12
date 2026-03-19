@@ -1,5 +1,5 @@
 {
+  "auth": "https://functions.poehali.dev/1521ec90-5416-4e69-be5f-5dca89ad5e9f",
   "send-telegram": "https://functions.poehali.dev/bd6f0965-e6da-465f-b27d-1ee278d13802",
-  "portfolio": "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7",
-  "testimonials": "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01"
+  "portfolio": "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7"
 }

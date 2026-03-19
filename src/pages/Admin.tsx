@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const AUTH_URL = "https://functions.poehali.dev/1521ec90-5416-4e69-be5f-5dca89ad5e9f";
 const TESTIMONIALS_URL = "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01";
 const PORTFOLIO_URL = "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7";
 
@@ -60,7 +61,8 @@ const Admin = () => {
     if (!token.trim()) { toast({ title: "Введите пароль", variant: "destructive" }); return; }
     setLoginLoading(true);
     try {
-      const res = await fetch(TESTIMONIALS_URL + "?all=true", {
+      const res = await fetch(AUTH_URL, {
+        method: "POST",
         headers: { "Content-Type": "application/json", "X-Admin-Token": token },
       });
       if (res.status === 401) {
