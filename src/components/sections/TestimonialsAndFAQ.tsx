@@ -10,7 +10,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const API_URL = "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01";
+import { API } from "@/config/api";
+const API_URL = API.testimonials;
 
 const fallbackTestimonials = [
   {

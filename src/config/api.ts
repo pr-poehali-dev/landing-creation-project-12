@@ -1,0 +1,7 @@
+export const API = {
+  auth:         "https://functions.poehali.dev/1521ec90-5416-4e69-be5f-5dca89ad5e9f",
+  testimonials: "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01",
+  portfolio:    "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7",
+  upload:       "https://functions.poehali.dev/738f209e-721e-4bbc-b3c9-1f30c6a6757a",
+  sendTelegram: "https://functions.poehali.dev/bd6f0965-e6da-465f-b27d-1ee278d13802",
+};

@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import Icon from '@/components/ui/icon';
 
-const PORTFOLIO_URL = "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7";
+import { API } from "@/config/api";
+const PORTFOLIO_URL = API.portfolio;
 
 interface Project {
   id: number;

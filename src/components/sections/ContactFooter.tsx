@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState, useEffect, useRef } from "react";
+import { API } from "@/config/api";
 
 const ContactFooter = () => {
   const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ const ContactFooter = () => {
     setSubmitStatus('idle');
     
     try {
-      const response = await fetch('https://functions.poehali.dev/bd6f0965-e6da-465f-b27d-1ee278d13802', {
+      const response = await fetch(API.sendTelegram, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,7 +1,10 @@
-export const AUTH_URL = "https://functions.poehali.dev/1521ec90-5416-4e69-be5f-5dca89ad5e9f";
-export const TESTIMONIALS_URL = "https://functions.poehali.dev/ce15942a-c5f3-4e40-a6ce-0aca3ead1e01";
-export const PORTFOLIO_URL = "https://functions.poehali.dev/e7a04abf-c814-49ed-aeaa-9c3eab9257e7";
-export const UPLOAD_URL = "https://functions.poehali.dev/738f209e-721e-4bbc-b3c9-1f30c6a6757a";
+export { API as default } from "@/config/api";
+import { API } from "@/config/api";
+
+export const AUTH_URL = API.auth;
+export const TESTIMONIALS_URL = API.testimonials;
+export const PORTFOLIO_URL = API.portfolio;
+export const UPLOAD_URL = API.upload;
 
 export const CATEGORIES = ["Корпоративы", "Государственные мероприятия", "Фестивали", "Конференции", "Выездное обслуживание"];
 
