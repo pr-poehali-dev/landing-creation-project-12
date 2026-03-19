@@ -41,18 +41,23 @@ export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
 
   const resetForm = () => { setForm({ title: "", category: "", images: [], guests: 0, date: "" }); setEditingId(null); };
 
-  const compressImage = (file: File, maxWidth = 1200, quality = 0.82): Promise<string> =>
+  const compressImage = (file: File, maxWidth = 1200, quality = 0.75): Promise<string> =>
     new Promise((resolve, reject) => {
       const img = new Image();
       const url = URL.createObjectURL(file);
       img.onload = () => {
         const scale = Math.min(1, maxWidth / img.width);
         const canvas = document.createElement("canvas");
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
         canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
         URL.revokeObjectURL(url);
-        resolve(canvas.toDataURL("image/jpeg", quality));
+        let result = canvas.toDataURL("image/jpeg", quality);
+        // если всё ещё больше 1МБ в base64 — жмём сильнее
+        if (result.length > 1_400_000) {
+          result = canvas.toDataURL("image/jpeg", 0.55);
+        }
+        resolve(result);
       };
       img.onerror = reject;
       img.src = url;
@@ -66,6 +71,7 @@ export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
       body: JSON.stringify({ file: compressed, name: file.name, content_type: "image/jpeg" }),
     });
     if (res.status === 401) { onAuthFail(); return null; }
+    if (!res.ok) return null;
     const data = await res.json();
     return data.url || null;
   };
@@ -75,11 +81,14 @@ export default function PortfolioTab({ headers, toast, onAuthFail }: Props) {
     if (!files.length) return;
     setUploading(true);
     try {
-      const urls = await Promise.all(files.map(uploadFile));
-      const valid = urls.filter(Boolean) as string[];
-      if (valid.length) {
-        setForm((f) => ({ ...f, images: [...f.images, ...valid] }));
-        toast({ title: `Загружено фото: ${valid.length}` });
+      const urls: string[] = [];
+      for (const file of files) {
+        const url = await uploadFile(file);
+        if (url) urls.push(url);
+      }
+      if (urls.length) {
+        setForm((f) => ({ ...f, images: [...f.images, ...urls] }));
+        toast({ title: `Загружено фото: ${urls.length}` });
       } else {
         toast({ title: "Ошибка загрузки фото", variant: "destructive" });
       }
