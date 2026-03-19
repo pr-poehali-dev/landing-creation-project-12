@@ -50,7 +50,7 @@ const ContactFooter = () => {
     setSubmitStatus('idle');
     
     try {
-      const response = await fetch('https://functions.poehali.dev/2309ba17-4ede-49a6-b3d3-603168ba5fed', {
+      const response = await fetch('https://functions.poehali.dev/bd6f0965-e6da-465f-b27d-1ee278d13802', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
