@@ -1,0 +1,1 @@
+UPDATE portfolio SET category = 'Корпоративные мероприятия' WHERE category = 'Корпоративы';

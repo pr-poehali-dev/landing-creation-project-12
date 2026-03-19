@@ -6,7 +6,7 @@ export const TESTIMONIALS_URL = API.testimonials;
 export const PORTFOLIO_URL = API.portfolio;
 export const UPLOAD_URL = API.upload;
 
-export const CATEGORIES = ["Корпоративы", "Государственные мероприятия", "Фестивали", "Конференции", "Выездное обслуживание"];
+export const CATEGORIES = ["Корпоративные мероприятия", "Государственные мероприятия", "Фестивали", "Конференции", "Выездное обслуживание"];
 
 export interface Testimonial {
   id: number;
