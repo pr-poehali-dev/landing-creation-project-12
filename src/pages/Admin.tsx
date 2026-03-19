@@ -308,33 +308,47 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
 
   const resetForm = () => { setForm({ title: "", category: "", image: "", guests: 0, date: "" }); setEditingId(null); };
 
+  const compressImage = (file: File, maxWidth = 1200, quality = 0.82): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const scale = Math.min(1, maxWidth / img.width);
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const reader = new FileReader();
-    reader.onload = async () => {
-      try {
-        const res = await fetch(UPLOAD_URL, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({ file: reader.result, name: file.name, content_type: file.type }),
-        });
-        if (res.status === 401) { onAuthFail(); return; }
-        const data = await res.json();
-        if (data.url) {
-          setForm((f) => ({ ...f, image: data.url }));
-          toast({ title: "Фото загружено" });
-        } else {
-          toast({ title: "Ошибка загрузки фото", variant: "destructive" });
-        }
-      } catch {
+    try {
+      const compressed = await compressImage(file);
+      const res = await fetch(UPLOAD_URL, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ file: compressed, name: file.name, content_type: "image/jpeg" }),
+      });
+      if (res.status === 401) { onAuthFail(); return; }
+      const data = await res.json();
+      if (data.url) {
+        setForm((f) => ({ ...f, image: data.url }));
+        toast({ title: "Фото загружено" });
+      } else {
         toast({ title: "Ошибка загрузки фото", variant: "destructive" });
-      } finally {
-        setUploading(false);
       }
-    };
-    reader.readAsDataURL(file);
+    } catch {
+      toast({ title: "Ошибка загрузки фото", variant: "destructive" });
+    } finally {
+      setUploading(false);
+    }
   };
 
   const startEdit = (p: Project) => {
