@@ -1,0 +1,1 @@
+UPDATE portfolio SET is_visible = false;
