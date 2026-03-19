@@ -21,7 +21,7 @@ def check_admin(headers):
     return token == ADMIN_TOKEN and ADMIN_TOKEN != ''
 
 def handler(event, context):
-    """API для управления портфолио: получение, создание, обновление, удаление проектов. v7"""
+    """API для управления портфолио: получение, создание, обновление, удаление проектов. v8"""
     if event.get('httpMethod') == 'OPTIONS':
         return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': ''}
 
@@ -47,21 +47,28 @@ def handler(event, context):
 
     return {'statusCode': 405, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'Method not allowed'})}
 
+def serialize_row(row):
+    row = dict(row)
+    if 'created_at' in row and row['created_at']:
+        row['created_at'] = row['created_at'].isoformat()
+    if 'updated_at' in row and row['updated_at']:
+        row['updated_at'] = row['updated_at'].isoformat()
+    if 'images' not in row or row['images'] is None:
+        row['images'] = []
+    if 'image' in row and row['image'] and not row['images']:
+        row['images'] = [row['image']]
+    return row
+
 def get_projects(params):
     show_all = params.get('all', 'false') == 'true'
     conn = get_db()
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             if show_all:
-                cur.execute("SELECT id, title, category, image, guests, date, is_visible, sort_order, created_at, updated_at FROM portfolio ORDER BY sort_order ASC")
+                cur.execute("SELECT id, title, category, image, images, guests, date, is_visible, sort_order, created_at, updated_at FROM portfolio ORDER BY sort_order ASC")
             else:
-                cur.execute("SELECT id, title, category, image, guests, date FROM portfolio WHERE is_visible = true ORDER BY sort_order ASC")
-            rows = cur.fetchall()
-            for row in rows:
-                if 'created_at' in row and row['created_at']:
-                    row['created_at'] = row['created_at'].isoformat()
-                if 'updated_at' in row and row['updated_at']:
-                    row['updated_at'] = row['updated_at'].isoformat()
+                cur.execute("SELECT id, title, category, image, images, guests, date FROM portfolio WHERE is_visible = true ORDER BY sort_order ASC")
+            rows = [serialize_row(r) for r in cur.fetchall()]
         return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': json.dumps(rows, ensure_ascii=False)}
     finally:
         conn.close()
@@ -70,7 +77,8 @@ def create_project(event):
     body = json.loads(event.get('body', '{}'))
     title = body.get('title', '').strip()
     category = body.get('category', '').strip()
-    image = body.get('image', '').strip()
+    images = body.get('images', [])
+    image = images[0] if images else body.get('image', '').strip()
     guests = body.get('guests', 0)
     date = body.get('date', '').strip()
 
@@ -83,10 +91,10 @@ def create_project(event):
             cur.execute("SELECT COALESCE(MAX(sort_order), 0) + 1 as next_order FROM portfolio")
             next_order = cur.fetchone()['next_order']
             cur.execute(
-                "INSERT INTO portfolio (title, category, image, guests, date, sort_order) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id, title, category, image, guests, date, is_visible, sort_order",
-                (title, category, image, guests, date, next_order)
+                "INSERT INTO portfolio (title, category, image, images, guests, date, sort_order) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id, title, category, image, images, guests, date, is_visible, sort_order",
+                (title, category, image, images, guests, date, next_order)
             )
-            row = cur.fetchone()
+            row = serialize_row(cur.fetchone())
             conn.commit()
         return {'statusCode': 201, 'headers': CORS_HEADERS, 'body': json.dumps(row, ensure_ascii=False)}
     finally:
@@ -105,6 +113,13 @@ def update_project(event):
             fields.append(key + " = %s")
             values.append(body[key])
 
+    if 'images' in body:
+        fields.append("images = %s")
+        values.append(body['images'])
+        if body['images']:
+            fields.append("image = %s")
+            values.append(body['images'][0])
+
     if not fields:
         return {'statusCode': 400, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'No fields to update'})}
 
@@ -115,14 +130,14 @@ def update_project(event):
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(
-                "UPDATE portfolio SET " + ", ".join(fields) + " WHERE id = %s RETURNING id, title, category, image, guests, date, is_visible, sort_order",
+                "UPDATE portfolio SET " + ", ".join(fields) + " WHERE id = %s RETURNING id, title, category, image, images, guests, date, is_visible, sort_order",
                 values
             )
             row = cur.fetchone()
             conn.commit()
         if not row:
             return {'statusCode': 404, 'headers': CORS_HEADERS, 'body': json.dumps({'error': 'Not found'})}
-        return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': json.dumps(row, ensure_ascii=False)}
+        return {'statusCode': 200, 'headers': CORS_HEADERS, 'body': json.dumps(serialize_row(row), ensure_ascii=False)}
     finally:
         conn.close()
 

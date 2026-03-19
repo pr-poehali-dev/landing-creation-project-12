@@ -33,6 +33,7 @@ interface Project {
   title: string;
   category: string;
   image: string;
+  images: string[];
   guests: number;
   date: string;
   is_visible: boolean;
@@ -290,7 +291,7 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [form, setForm] = useState({ title: "", category: "", image: "", guests: 0, date: "" });
+  const [form, setForm] = useState({ title: "", category: "", images: [] as string[], guests: 0, date: "" });
   const [uploading, setUploading] = useState(false);
 
   const fetchData = useCallback(async () => {
@@ -306,7 +307,7 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
 
   useEffect(() => { fetchData(); }, []);
 
-  const resetForm = () => { setForm({ title: "", category: "", image: "", guests: 0, date: "" }); setEditingId(null); };
+  const resetForm = () => { setForm({ title: "", category: "", images: [], guests: 0, date: "" }); setEditingId(null); };
 
   const compressImage = (file: File, maxWidth = 1200, quality = 0.82): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -325,22 +326,28 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
       img.src = url;
     });
 
+  const uploadFile = async (file: File): Promise<string | null> => {
+    const compressed = await compressImage(file);
+    const res = await fetch(UPLOAD_URL, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ file: compressed, name: file.name, content_type: "image/jpeg" }),
+    });
+    if (res.status === 401) { onAuthFail(); return null; }
+    const data = await res.json();
+    return data.url || null;
+  };
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
     setUploading(true);
     try {
-      const compressed = await compressImage(file);
-      const res = await fetch(UPLOAD_URL, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ file: compressed, name: file.name, content_type: "image/jpeg" }),
-      });
-      if (res.status === 401) { onAuthFail(); return; }
-      const data = await res.json();
-      if (data.url) {
-        setForm((f) => ({ ...f, image: data.url }));
-        toast({ title: "Фото загружено" });
+      const urls = await Promise.all(files.map(uploadFile));
+      const valid = urls.filter(Boolean) as string[];
+      if (valid.length) {
+        setForm((f) => ({ ...f, images: [...f.images, ...valid] }));
+        toast({ title: `Загружено фото: ${valid.length}` });
       } else {
         toast({ title: "Ошибка загрузки фото", variant: "destructive" });
       }
@@ -348,21 +355,27 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
       toast({ title: "Ошибка загрузки фото", variant: "destructive" });
     } finally {
       setUploading(false);
+      e.target.value = "";
     }
+  };
+
+  const removeImage = (idx: number) => {
+    setForm((f) => ({ ...f, images: f.images.filter((_, i) => i !== idx) }));
   };
 
   const startEdit = (p: Project) => {
     setEditingId(p.id);
-    setForm({ title: p.title, category: p.category, image: p.image, guests: p.guests, date: p.date });
+    setForm({ title: p.title, category: p.category, images: p.images || (p.image ? [p.image] : []), guests: p.guests, date: p.date });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const save = async () => {
     if (!form.title.trim() || !form.category.trim()) { toast({ title: "Заполните название и категорию", variant: "destructive" }); return; }
+    const payload = { ...form, image: form.images[0] || "" };
     const res = await apiCall(PORTFOLIO_URL, {
       method: editingId ? "PUT" : "POST",
       headers,
-      body: JSON.stringify(editingId ? { id: editingId, ...form } : form),
+      body: JSON.stringify(editingId ? { id: editingId, ...payload } : payload),
     }, onAuthFail);
     if (res) {
       toast({ title: editingId ? "Проект обновлён" : "Проект добавлен" });
@@ -405,21 +418,33 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
               </SelectContent>
             </Select>
           </div>
-          <div className="space-y-2">
-            <div className="flex gap-2">
-              <Input placeholder="Ссылка на изображение" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className="flex-1" />
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Фото проекта</span>
               <label className="cursor-pointer">
-                <Button type="button" variant="outline" disabled={uploading} asChild>
+                <Button type="button" variant="outline" size="sm" disabled={uploading} asChild>
                   <span>
-                    <Icon name={uploading ? "Loader" : "Upload"} size={16} className={`mr-1 ${uploading ? "animate-spin" : ""}`} />
-                    {uploading ? "Загрузка..." : "Загрузить фото"}
+                    <Icon name={uploading ? "Loader" : "Upload"} size={15} className={`mr-1 ${uploading ? "animate-spin" : ""}`} />
+                    {uploading ? "Загрузка..." : "Добавить фото"}
                   </span>
                 </Button>
-                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                <input type="file" accept="image/*" multiple className="hidden" onChange={handleImageUpload} />
               </label>
             </div>
-            {form.image && (
-              <img src={form.image} alt="preview" className="h-24 rounded-lg object-cover" />
+            {form.images.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {form.images.map((url, idx) => (
+                  <div key={idx} className="relative group">
+                    <img src={url} alt={`фото ${idx + 1}`} className="h-24 w-32 object-cover rounded-lg" />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(idx)}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                    >✕</button>
+                    {idx === 0 && <span className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-1 rounded">обложка</span>}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -447,8 +472,8 @@ function PortfolioTab({ headers, toast, onAuthFail }: { headers: Record<string, 
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    {p.image && (
-                      <img src={p.image} alt={p.title} className="w-20 h-14 object-cover rounded-lg shrink-0" />
+                    {(p.images?.[0] || p.image) && (
+                      <img src={p.images?.[0] || p.image} alt={p.title} className="w-20 h-14 object-cover rounded-lg shrink-0" />
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-foreground truncate">{p.title}</div>
