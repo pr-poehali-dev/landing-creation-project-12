@@ -145,11 +145,7 @@ const MainSections = () => {
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                   <CardDescription>{service.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <Button variant="ghost" className="text-accent hover:text-accent/80 p-0">
-                    Подробнее <Icon name="ArrowRight" size={16} className="ml-1" />
-                  </Button>
-                </CardContent>
+
               </Card>
             ))}
           </div>
