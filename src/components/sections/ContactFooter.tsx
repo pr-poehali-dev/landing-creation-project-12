@@ -257,7 +257,7 @@ const ContactFooter = () => {
 
           <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
             <p>© 2026 Pacific Protec. Все права защищены.</p>
-            <p>ООО "Пасифик Протек" | ИНН 2543XXXXXX</p>
+            <p>ООО "ТО "Тихий Океан" | ИНН 2536208131</p>
           </div>
         </div>
       </footer>
