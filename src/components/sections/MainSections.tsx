@@ -45,7 +45,7 @@ const MainSections = () => {
       title: "Шатры",
       description: "Установка шатров для выездных мероприятий. Защита от погоды и создание комфортного пространства.",
       icon: "Home",
-      image: "https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/58384b3b-cd78-45cd-b557-0c82f489ccfa.jpg",
+      image: "https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/e0e24f9d-87cf-4450-991d-3568dec8eb29.jpg",
     },
     {
       id: "turnkey",
