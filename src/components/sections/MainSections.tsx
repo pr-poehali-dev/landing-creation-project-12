@@ -162,7 +162,7 @@ const MainSections = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             {targetAudience.map((audience, idx) => (
-              <Card key={idx} className={`border-primary/20 ${audience.highlighted ? 'border-accent' : ''}`}>
+              <Card key={idx} className="border-primary/20">
                 <CardHeader>
                   <Icon name={audience.icon} size={48} className="text-primary mb-4" />
                   <CardTitle className="text-2xl">{audience.title}</CardTitle>
