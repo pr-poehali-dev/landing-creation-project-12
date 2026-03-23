@@ -354,7 +354,7 @@ const ContactFooter = () => {
 
               <div className="mt-6">
                 <p className="text-sm font-semibold mb-3">Мы в соцсетях:</p>
-                <a href="https://t.me/protechvl" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors">
+                <a href="https://t.me/pacific_protec" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors">
                   <Icon name="Send" size={20} />
                   <span className="text-sm">Telegram</span>
                 </a>
