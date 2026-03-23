@@ -69,6 +69,7 @@ const ContactFooter = () => {
     message: "",
   });
   const [consentChecked, setConsentChecked] = useState(false);
+  const [privacyChecked, setPrivacyChecked] = useState(false);
   const [consentModalOpen, setConsentModalOpen] = useState(false);
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
@@ -98,7 +99,7 @@ const ContactFooter = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consentChecked) return;
+    if (!consentChecked || !privacyChecked) return;
     setIsSubmitting(true);
     setSubmitStatus('idle');
     
@@ -121,6 +122,7 @@ const ContactFooter = () => {
         setSubmitStatus('success');
         setFormData({ name: '', phone: '', eventType: '', message: '' });
         setConsentChecked(false);
+        setPrivacyChecked(false);
         setTimeout(() => setSubmitStatus('idle'), 5000);
       } else {
         setSubmitStatus('error');
@@ -189,38 +191,51 @@ const ContactFooter = () => {
                   className="text-base"
                 />
 
-                <div className="flex items-start gap-3 py-1">
-                  <Checkbox
-                    id="consent"
-                    checked={consentChecked}
-                    onCheckedChange={(val) => setConsentChecked(val === true)}
-                    className="mt-0.5"
-                  />
-                  <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-                    Я ознакомлен(а) с{" "}
-                    <button
-                      type="button"
-                      onClick={() => setPrivacyModalOpen(true)}
-                      className="text-primary underline underline-offset-2 hover:opacity-80"
-                    >
-                      Политикой конфиденциальности
-                    </button>{" "}
-                    и даю{" "}
-                    <button
-                      type="button"
-                      onClick={() => setConsentModalOpen(true)}
-                      className="text-primary underline underline-offset-2 hover:opacity-80"
-                    >
-                      согласие на обработку персональных данных
-                    </button>
-                    *
-                  </label>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="privacy"
+                      checked={privacyChecked}
+                      onCheckedChange={(val) => setPrivacyChecked(val === true)}
+                      className="mt-0.5"
+                    />
+                    <label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                      Я ознакомлен(а) с{" "}
+                      <button
+                        type="button"
+                        onClick={() => setPrivacyModalOpen(true)}
+                        className="text-primary underline underline-offset-2 hover:opacity-80"
+                      >
+                        Политикой конфиденциальности
+                      </button>
+                      *
+                    </label>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="consent"
+                      checked={consentChecked}
+                      onCheckedChange={(val) => setConsentChecked(val === true)}
+                      className="mt-0.5"
+                    />
+                    <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                      Даю{" "}
+                      <button
+                        type="button"
+                        onClick={() => setConsentModalOpen(true)}
+                        className="text-primary underline underline-offset-2 hover:opacity-80"
+                      >
+                        согласие на обработку персональных данных
+                      </button>
+                      *
+                    </label>
+                  </div>
                 </div>
 
                 <Button 
                   type="submit" 
                   className="w-full bg-accent hover:bg-accent/90 text-lg py-6"
-                  disabled={isSubmitting || !consentChecked}
+                  disabled={isSubmitting || !consentChecked || !privacyChecked}
                 >
                   {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
                 </Button>
