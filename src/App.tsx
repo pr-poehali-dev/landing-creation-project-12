@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => {
             </Routes>
           </BrowserRouter>
           <ScrollToTop />
+          <CookieBanner />
         </div>
       </TooltipProvider>
     </QueryClientProvider>
