@@ -218,7 +218,7 @@ const MainSections = () => {
                   {step.number}
                 </div>
                 <Icon name={step.icon} size={40} className="text-primary mb-4" strokeWidth={2} />
-                <h3 className="font-semibold text-lg mb-2 text-center">{step.title}</h3>
+                <h3 className="font-bold text-lg mb-2 text-center text-white">{step.title}</h3>
                 <p className="text-sm text-muted-foreground text-center">{step.description}</p>
               </div>
             ))}
@@ -234,7 +234,7 @@ const MainSections = () => {
                     </div>
                     <Icon name={step.icon} size={32} className="text-primary" />
                   </div>
-                  <CardTitle className="text-lg">{step.title}</CardTitle>
+                  <CardTitle className="text-lg text-white">{step.title}</CardTitle>
                   <CardDescription>{step.description}</CardDescription>
                 </CardHeader>
               </Card>
