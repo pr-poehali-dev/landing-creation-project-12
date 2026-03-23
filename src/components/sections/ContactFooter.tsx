@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -10,8 +11,124 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState, useEffect, useRef } from "react";
 import { API } from "@/config/api";
+
+const ConsentModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
+  <Dialog open={open} onOpenChange={onClose}>
+    <DialogContent className="max-w-2xl">
+      <DialogHeader>
+        <DialogTitle>Согласие на обработку персональных данных</DialogTitle>
+      </DialogHeader>
+      <ScrollArea className="max-h-[60vh] pr-4">
+        <div className="text-sm text-muted-foreground space-y-4 leading-relaxed">
+          <p>
+            Настоящим я даю согласие ООО «ТО «Тихий Океан» (ИНН: 2536208131, адрес: г. Владивосток, пр-кт Океанский, 54, оф. 315; далее — «Оператор») на обработку следующих персональных данных:
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>фамилия, имя, отчество;</li>
+            <li>номер телефона;</li>
+            <li>адрес электронной почты;</li>
+            <li>наименование организации (для юридических лиц);</li>
+            <li>иные данные, добровольно указанные мной в форме заявки.</li>
+          </ul>
+          <p>
+            <strong>Цели обработки:</strong> обработка заявки на оказание услуг технического обеспечения мероприятий, связь по вопросам оказания услуг, направление коммерческих предложений.
+          </p>
+          <p>
+            <strong>Действия с данными:</strong> сбор, хранение, систематизация, использование, передача привлечённым исполнителям (в рамках оказания услуг), уничтожение.
+          </p>
+          <p>
+            <strong>Срок:</strong> до достижения целей обработки или до отзыва согласия.
+          </p>
+          <p>
+            Согласие может быть отозвано путём направления письменного заявления на:{" "}
+            <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a>
+          </p>
+        </div>
+      </ScrollArea>
+      <Button onClick={onClose} className="mt-2">Закрыть</Button>
+    </DialogContent>
+  </Dialog>
+);
+
+const PrivacyModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
+  <Dialog open={open} onOpenChange={onClose}>
+    <DialogContent className="max-w-2xl">
+      <DialogHeader>
+        <DialogTitle>Политика конфиденциальности и обработки персональных данных</DialogTitle>
+      </DialogHeader>
+      <ScrollArea className="max-h-[60vh] pr-4">
+        <div className="text-sm text-muted-foreground space-y-4 leading-relaxed">
+          <p className="text-xs text-muted-foreground">ООО «ТО «Тихий Океан»» · Дата публикации: «23» марта 2026 г.</p>
+
+          <h3 className="font-semibold text-foreground">1. Общие положения</h3>
+          <p>1.1. Настоящая Политика конфиденциальности (далее — «Политика») определяет порядок обработки и защиты персональных данных физических лиц (далее — «Пользователь»), которые ООО «ТО «Тихий Океан»» (ИНН: 2536208131, адрес: г. Владивосток, пр-кт Океанский, 54, оф. 315; далее — «Оператор») получает при использовании Пользователем сайта pacificprotech.ru (далее — «Сайт»), а также при обращении по телефону, email и в мессенджерах.</p>
+          <p>1.2. Обработка персональных данных осуществляется в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» и иными нормативными правовыми актами Российской Федерации.</p>
+          <p>1.3. Используя Сайт и заполняя формы заявок, Пользователь подтверждает, что ознакомился с настоящей Политикой и даёт согласие на обработку своих персональных данных на указанных условиях.</p>
+
+          <h3 className="font-semibold text-foreground">2. Оператор персональных данных</h3>
+          <p>Наименование: ООО «ТО «Тихий Океан»»</p>
+          <p>ИНН: 2536208131</p>
+          <p>Адрес: г. Владивосток, пр-кт Океанский, 54, оф. 315</p>
+          <p>Email: <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a></p>
+          <p>Телефон: +7 (908) 992-50-30</p>
+
+          <h3 className="font-semibold text-foreground">3. Персональные данные, которые мы обрабатываем</h3>
+          <p>3.1. При заполнении формы заявки на Сайте Пользователь предоставляет: фамилию, имя, отчество (при наличии); номер телефона; адрес электронной почты; наименование организации (для представителей юридических лиц); тип мероприятия и иные сведения, добровольно указанные в форме.</p>
+          <p>3.2. Автоматически при посещении Сайта могут собираться: IP-адрес; тип и версия браузера, операционная система; страницы Сайта, которые посещает Пользователь; источник перехода на Сайт; файлы cookie и данные аналитических систем (Яндекс.Метрика и др.).</p>
+          <p>3.3. Оператор не обрабатывает специальные категории персональных данных (расовая и национальная принадлежность, политические взгляды, религиозные убеждения, состояние здоровья, биометрические данные).</p>
+
+          <h3 className="font-semibold text-foreground">4. Цели обработки персональных данных</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>обработка входящих заявок на оказание услуг технического обеспечения мероприятий;</li>
+            <li>связь с Пользователем: подтверждение заявки, уточнение деталей, направление коммерческих предложений и смет;</li>
+            <li>исполнение договорных обязательств по оказанию услуг;</li>
+            <li>улучшение качества работы Сайта и анализ посещаемости;</li>
+            <li>исполнение требований законодательства Российской Федерации.</li>
+          </ul>
+
+          <h3 className="font-semibold text-foreground">5. Правовые основания обработки</h3>
+          <p>Оператор обрабатывает персональные данные на основании: согласия субъекта (ст. 6, ч. 1, п. 1 ФЗ-152); заключения и исполнения договора (ст. 6, ч. 1, п. 5 ФЗ-152); исполнения обязанностей Оператора, предусмотренных законодательством РФ (ст. 6, ч. 1, п. 2 ФЗ-152).</p>
+
+          <h3 className="font-semibold text-foreground">6. Файлы cookie и аналитика</h3>
+          <p>6.1. Сайт использует файлы cookie для обеспечения работы Сайта и анализа пользовательского поведения.</p>
+          <p>6.2. На Сайте могут использоваться: Яндекс.Метрика и иные аналогичные сервисы.</p>
+          <p>6.3. Пользователь вправе в любой момент отключить cookies в настройках своего браузера.</p>
+
+          <h3 className="font-semibold text-foreground">7. Передача персональных данных третьим лицам</h3>
+          <p>7.1. Оператор не передаёт персональные данные третьим лицам, за исключением: необходимости исполнения договора; требований законодательства РФ; наличия явного согласия Пользователя.</p>
+
+          <h3 className="font-semibold text-foreground">8. Сроки хранения персональных данных</h3>
+          <p>Данные по заявкам и договорам — 5 лет; данные через формы обратной связи без договора — 3 года; данные аналитики (cookies) — согласно настройкам сервисов.</p>
+
+          <h3 className="font-semibold text-foreground">9. Защита персональных данных</h3>
+          <p>Оператор применяет технические и организационные меры защиты: ограничение доступа к данным, использование HTTPS, регулярный контроль мер защиты.</p>
+
+          <h3 className="font-semibold text-foreground">10. Права субъекта персональных данных</h3>
+          <p>Пользователь вправе: получить информацию об обработке данных; требовать уточнения или удаления данных; отозвать согласие; обжаловать действия Оператора в Роскомнадзор или суд. Запрос направляется на: <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a>. Срок рассмотрения — 30 календарных дней.</p>
+
+          <h3 className="font-semibold text-foreground">11. Изменение Политики</h3>
+          <p>Оператор вправе вносить изменения в Политику. Новая редакция вступает в силу с момента публикации на Сайте. Продолжение использования Сайта означает согласие с новой редакцией.</p>
+
+          <h3 className="font-semibold text-foreground">12. Контактная информация</h3>
+          <p>Email: <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a></p>
+          <p>Телефон: +7 (908) 992-50-30</p>
+          <p>Адрес: г. Владивосток, пр-кт Океанский, 54, оф. 315</p>
+          <p className="pt-2 text-xs">© 2026 ООО «ТО «Тихий Океан»». Все права защищены.</p>
+        </div>
+      </ScrollArea>
+      <Button onClick={onClose} className="mt-2">Закрыть</Button>
+    </DialogContent>
+  </Dialog>
+);
 
 const ContactFooter = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +137,9 @@ const ContactFooter = () => {
     eventType: "",
     message: "",
   });
+  const [consentChecked, setConsentChecked] = useState(false);
+  const [consentModalOpen, setConsentModalOpen] = useState(false);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const footerRef = useRef<HTMLElement>(null);
 
@@ -47,6 +167,7 @@ const ContactFooter = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consentChecked) return;
     setIsSubmitting(true);
     setSubmitStatus('idle');
     
@@ -68,6 +189,7 @@ const ContactFooter = () => {
       if (response.ok && data.success) {
         setSubmitStatus('success');
         setFormData({ name: '', phone: '', eventType: '', message: '' });
+        setConsentChecked(false);
         setTimeout(() => setSubmitStatus('idle'), 5000);
       } else {
         setSubmitStatus('error');
@@ -84,6 +206,9 @@ const ContactFooter = () => {
 
   return (
     <>
+      <ConsentModal open={consentModalOpen} onClose={() => setConsentModalOpen(false)} />
+      <PrivacyModal open={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
+
       <section id="contact" className="py-20 px-4 bg-gradient-to-br from-primary to-primary/80">
         <div className="container mx-auto max-w-3xl">
           <div className="text-center mb-12">
@@ -132,10 +257,39 @@ const ContactFooter = () => {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="text-base"
                 />
+
+                <div className="flex items-start gap-3 py-1">
+                  <Checkbox
+                    id="consent"
+                    checked={consentChecked}
+                    onCheckedChange={(val) => setConsentChecked(val === true)}
+                    className="mt-0.5"
+                  />
+                  <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                    Я ознакомлен(а) с{" "}
+                    <button
+                      type="button"
+                      onClick={() => setPrivacyModalOpen(true)}
+                      className="text-primary underline underline-offset-2 hover:opacity-80"
+                    >
+                      Политикой конфиденциальности
+                    </button>{" "}
+                    и даю{" "}
+                    <button
+                      type="button"
+                      onClick={() => setConsentModalOpen(true)}
+                      className="text-primary underline underline-offset-2 hover:opacity-80"
+                    >
+                      согласие на обработку персональных данных
+                    </button>
+                    *
+                  </label>
+                </div>
+
                 <Button 
                   type="submit" 
                   className="w-full bg-accent hover:bg-accent/90 text-lg py-6"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !consentChecked}
                 >
                   {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
                 </Button>
@@ -220,7 +374,14 @@ const ContactFooter = () => {
                 <li><a href="#" className="hover:text-primary transition-colors">Портфолио</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Отзывы</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Контакты</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Политика конфиденциальности</a></li>
+                <li>
+                  <button
+                    onClick={() => setPrivacyModalOpen(true)}
+                    className="hover:text-primary transition-colors text-left"
+                  >
+                    Политика конфиденциальности
+                  </button>
+                </li>
               </ul>
             </div>
 
