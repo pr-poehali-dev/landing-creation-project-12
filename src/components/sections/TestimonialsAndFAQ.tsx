@@ -121,7 +121,7 @@ const TestimonialsAndFAQ = () => {
 
           <div className="text-center mt-12">
             <p className="text-xl mb-4">Не нашли ответа?</p>
-            <Button className="bg-accent hover:bg-accent/90">
+            <Button className="bg-accent hover:bg-accent/90" onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}>
               Задать вопрос <Icon name="ArrowRight" className="ml-2" size={18} />
             </Button>
           </div>
