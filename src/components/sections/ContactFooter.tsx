@@ -332,33 +332,11 @@ const ContactFooter = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-lg mb-4 text-white">Контакты</h4>
-              <ul className="space-y-3 text-sm">
-                <li className="flex items-start gap-2">
-                  <Icon name="Phone" size={16} className="text-primary mt-1" />
-                  <a href="tel:+79089925030" className="text-primary hover:text-accent transition-colors">+7 (908) 992-50-30</a>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Icon name="Phone" size={16} className="text-primary mt-1" />
-                  <a href="tel:+79147063497" className="text-primary hover:text-accent transition-colors">+7 (914) 706-34-97</a>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Icon name="Mail" size={16} className="text-primary mt-1" />
-                  <a href="mailto:ppt@pmvl.ru" className="text-primary hover:text-accent transition-colors">ppt@pmvl.ru</a>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Icon name="MapPin" size={16} className="text-primary mt-1" />
-                  <span className="text-muted-foreground">г. Владивосток, пр-кт Океанский, 54, оф. 315</span>
-                </li>
-              </ul>
-
-              <div className="mt-6">
-                <p className="text-sm font-semibold mb-3 text-white">Мы в соцсетях:</p>
-                <a href="https://t.me/pacific_protec" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors">
-                  <Icon name="Send" size={20} />
-                  <span className="text-sm">Telegram</span>
-                </a>
-              </div>
+              <p className="text-sm font-semibold mb-3 text-white">Мы в соцсетях:</p>
+              <a href="https://t.me/pacific_protec" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors">
+                <Icon name="Send" size={20} />
+                <span className="text-sm">Telegram</span>
+              </a>
             </div>
           </div>
 
