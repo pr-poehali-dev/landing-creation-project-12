@@ -72,7 +72,7 @@ const TestimonialsAndFAQ = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-4 text-secondary">Ответы на частые вопросы</h2>
           </div>
 
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible defaultValue="faq-1" className="space-y-4">
             <AccordionItem value="faq-1" className="border border-primary/20 rounded-lg px-6">
               <AccordionTrigger className="text-lg font-bold text-foreground hover:no-underline">
                 ❓ За какой срок нужно бронировать оборудование?
