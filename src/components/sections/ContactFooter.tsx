@@ -64,7 +64,7 @@ const ConsentModal = ({ open, onClose }: { open: boolean; onClose: () => void })
 const ContactFooter = () => {
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
+    phone: "+7",
     eventType: "",
     message: "",
   });
@@ -120,7 +120,7 @@ const ContactFooter = () => {
       
       if (response.ok && data.success) {
         setSubmitStatus('success');
-        setFormData({ name: '', phone: '', eventType: '', message: '' });
+        setFormData({ name: '', phone: '+7', eventType: '', message: '' });
         setConsentChecked(false);
         setPrivacyChecked(false);
         setTimeout(() => setSubmitStatus('idle'), 5000);
@@ -167,7 +167,11 @@ const ContactFooter = () => {
                   type="tel"
                   placeholder="Телефон*"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (!val.startsWith('+7')) return;
+                    setFormData({ ...formData, phone: val });
+                  }}
                   required
                   className="text-base"
                 />
