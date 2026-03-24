@@ -61,28 +61,23 @@ const ConsentModal = ({ open, onClose }: { open: boolean; onClose: () => void })
   </Dialog>
 );
 
-const formatPhone = (value: string, prev: string) => {
-  const digits = value.replace(/\D/g, '');
-  const d = digits.startsWith('7') ? digits.slice(1) : digits.slice(0, 10);
-  if (value.length < prev.length) {
-    // удаление — просто пересобрать из цифр
-  }
-  let result = '+7';
-  if (d.length === 0) return result;
-  result += ' (' + d.slice(0, 3);
-  if (d.length < 3) return result;
-  result += ') ' + d.slice(3, 6);
-  if (d.length < 6) return result;
-  result += '-' + d.slice(6, 8);
-  if (d.length < 8) return result;
-  result += '-' + d.slice(8, 10);
+const formatPhone = (value: string) => {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+  const d = digits.startsWith('7') ? digits.slice(1) : digits.startsWith('8') ? digits.slice(1) : digits;
+  const n = d.slice(0, 10);
+  if (n.length === 0) return '';
+  let result = '+7 (';
+  result += n.slice(0, 3);
+  if (n.length > 3) result += ') ' + n.slice(3, 6);
+  if (n.length > 6) result += '-' + n.slice(6, 8);
+  if (n.length > 8) result += '-' + n.slice(8, 10);
   return result;
 };
 
 const ContactFooter = () => {
   const [formData, setFormData] = useState({
     name: "",
-    phone: "+7",
+    phone: "",
     eventType: "",
     message: "",
   });
@@ -138,7 +133,7 @@ const ContactFooter = () => {
       
       if (response.ok && data.success) {
         setSubmitStatus('success');
-        setFormData({ name: '', phone: '+7', eventType: '', message: '' });
+        setFormData({ name: '', phone: '', eventType: '', message: '' });
         setConsentChecked(false);
         setPrivacyChecked(false);
         setTimeout(() => setSubmitStatus('idle'), 5000);
@@ -183,9 +178,9 @@ const ContactFooter = () => {
                 />
                 <Input
                   type="tel"
-                  placeholder="Телефон*"
+                  placeholder="+7 (___) ___-__-__"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: formatPhone(e.target.value, formData.phone) })}
+                  onChange={(e) => setFormData({ ...formData, phone: formatPhone(e.target.value) })}
                   required
                   className="text-base"
                 />
