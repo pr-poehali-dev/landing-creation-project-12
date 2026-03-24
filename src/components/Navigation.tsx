@@ -59,7 +59,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <img 
-              src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/2e1ddc97-99f6-413a-b71d-ebbe35fd1931.png" 
+              src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/d03a65d6-243e-46de-bcb9-333b0af4f17a.png" 
               alt="Протэк" 
               className="h-12 w-auto cursor-pointer"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

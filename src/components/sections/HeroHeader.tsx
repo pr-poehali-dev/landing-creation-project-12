@@ -21,7 +21,7 @@ const HeroHeader = () => {
         
         <div className="container mx-auto text-center relative z-10 max-w-4xl">
           <img 
-            src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/2e1ddc97-99f6-413a-b71d-ebbe35fd1931.png" 
+            src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/d03a65d6-243e-46de-bcb9-333b0af4f17a.png" 
             alt="Протэк" 
             className="w-64 md:w-80 mx-auto mb-8 animate-fade-in"
           />
