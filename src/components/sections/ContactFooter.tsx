@@ -291,7 +291,7 @@ const ContactFooter = () => {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
               <img 
-                src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/d03a65d6-243e-46de-bcb9-333b0af4f17a.png" 
+                src="https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/d0a5d26b-d43a-4f5d-a90e-ad9f2ea167ea.png" 
                 alt="Протэк" 
                 className="h-16 w-auto mb-4"
               />
