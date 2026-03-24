@@ -304,12 +304,12 @@ const ContactFooter = () => {
             <div>
               <h4 className="font-bold text-lg mb-4 text-white">Услуги</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Звуковое оборудование</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Световое оборудование</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">LED-экраны</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Сценические конструкции</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Шатры</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Комплексное обеспечение</a></li>
+                <li><a href="#sound" className="hover:text-primary transition-colors">Звуковое оборудование</a></li>
+                <li><a href="#light" className="hover:text-primary transition-colors">Световое оборудование</a></li>
+                <li><a href="#led" className="hover:text-primary transition-colors">LED-экраны</a></li>
+                <li><a href="#stage" className="hover:text-primary transition-colors">Сценические конструкции</a></li>
+                <li><a href="#tents" className="hover:text-primary transition-colors">Шатры</a></li>
+                <li><a href="#turnkey" className="hover:text-primary transition-colors">Комплексное обеспечение</a></li>
               </ul>
             </div>
 

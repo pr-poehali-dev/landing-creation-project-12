@@ -134,7 +134,7 @@ const MainSections = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => (
-              <Card key={service.id} className="service-card overflow-hidden hover:-translate-y-2 transition-all">
+              <Card key={service.id} id={service.id} className="service-card overflow-hidden hover:-translate-y-2 transition-all">
                 <div className="h-48 overflow-hidden">
                   <img src={service.image} alt={service.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                 </div>
