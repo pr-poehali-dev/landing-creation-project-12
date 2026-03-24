@@ -167,11 +167,7 @@ const ContactFooter = () => {
                   type="tel"
                   placeholder="Телефон*"
                   value={formData.phone}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (!val.startsWith('+7')) return;
-                    setFormData({ ...formData, phone: val });
-                  }}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   required
                   className="text-base"
                 />
