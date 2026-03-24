@@ -101,11 +101,14 @@ function Lightbox({ project, initialIndex, onClose }: LightboxProps) {
   );
 }
 
+const PAGE_SIZE = 9;
+
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все');
   const [projects, setProjects] = useState<Project[]>([]);
   const [categories, setCategories] = useState<string[]>(['Все']);
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetch(PORTFOLIO_URL)
@@ -124,6 +127,14 @@ const Portfolio = () => {
     ? projects
     : projects.filter(project => project.category === selectedCategory);
 
+  const totalPages = Math.ceil(filteredProjects.length / PAGE_SIZE);
+  const pagedProjects = filteredProjects.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    setPage(1);
+  };
+
   const getProjectImages = (p: Project) => p.images?.length ? p.images : (p.image ? [p.image] : []);
 
   return (
@@ -140,7 +151,7 @@ const Portfolio = () => {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               className={`px-6 py-2 rounded-full font-medium transition-all ${
                 selectedCategory === category
                   ? 'bg-accent text-accent-foreground shadow-lg scale-105'
@@ -153,7 +164,7 @@ const Portfolio = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => {
+          {pagedProjects.map((project) => {
             const images = getProjectImages(project);
             return (
               <div
@@ -192,6 +203,38 @@ const Portfolio = () => {
             );
           })}
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-10">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded-full bg-secondary/50 hover:bg-secondary text-secondary-foreground disabled:opacity-30 transition-all"
+            >
+              <Icon name="ChevronLeft" size={18} />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`w-10 h-10 rounded-full font-medium transition-all ${
+                  p === page
+                    ? 'bg-accent text-accent-foreground shadow-lg scale-105'
+                    : 'bg-secondary/50 hover:bg-secondary text-secondary-foreground'
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="px-4 py-2 rounded-full bg-secondary/50 hover:bg-secondary text-secondary-foreground disabled:opacity-30 transition-all"
+            >
+              <Icon name="ChevronRight" size={18} />
+            </button>
+          </div>
+        )}
 
         {filteredProjects.length === 0 && (
           <div className="text-center py-12">
