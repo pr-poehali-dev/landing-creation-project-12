@@ -31,7 +31,7 @@ const MainSections = () => {
       title: "LED-экраны",
       description: "Светодиодные экраны высокого разрешения для indoor и outdoor. Яркая картинка в любых условиях.",
       icon: "Monitor",
-      image: "https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/files/82d747da-1c70-45a8-9f14-4aade88fd9b5.jpg",
+      image: "https://cdn.poehali.dev/projects/dce3c669-40cb-458b-84d5-2fd7d036caae/bucket/c244f49d-abe6-4852-b2b7-e6ccaa8bc4de.jpg",
     },
     {
       id: "stage",
