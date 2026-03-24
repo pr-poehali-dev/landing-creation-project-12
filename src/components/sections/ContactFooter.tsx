@@ -61,14 +61,21 @@ const ConsentModal = ({ open, onClose }: { open: boolean; onClose: () => void })
   </Dialog>
 );
 
-const formatPhone = (value: string) => {
+const formatPhone = (value: string, prev: string) => {
   const digits = value.replace(/\D/g, '');
-  const d = digits.startsWith('7') ? digits.slice(1) : digits;
+  const d = digits.startsWith('7') ? digits.slice(1) : digits.slice(0, 10);
+  if (value.length < prev.length) {
+    // удаление — просто пересобрать из цифр
+  }
   let result = '+7';
-  if (d.length > 0) result += ' (' + d.slice(0, 3);
-  if (d.length >= 3) result += ') ' + d.slice(3, 6);
-  if (d.length >= 6) result += '-' + d.slice(6, 8);
-  if (d.length >= 8) result += '-' + d.slice(8, 10);
+  if (d.length === 0) return result;
+  result += ' (' + d.slice(0, 3);
+  if (d.length < 3) return result;
+  result += ') ' + d.slice(3, 6);
+  if (d.length < 6) return result;
+  result += '-' + d.slice(6, 8);
+  if (d.length < 8) return result;
+  result += '-' + d.slice(8, 10);
   return result;
 };
 
@@ -178,7 +185,7 @@ const ContactFooter = () => {
                   type="tel"
                   placeholder="Телефон*"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: formatPhone(e.target.value) })}
+                  onChange={(e) => setFormData({ ...formData, phone: formatPhone(e.target.value, formData.phone) })}
                   required
                   className="text-base"
                 />
