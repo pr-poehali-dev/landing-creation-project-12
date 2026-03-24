@@ -31,7 +31,7 @@ const PrivacyModal = ({ open, onClose }: PrivacyModalProps) => (
           <p>Наименование: ООО «ТО «Тихий Океан»»</p>
           <p>ИНН: 2536208131</p>
           <p>Адрес: г. Владивосток, пр-кт Океанский, 54, оф. 315</p>
-          <p>Email: <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a></p>
+          <p>Email: <span className="text-foreground">ppt@pmvl.ru</span></p>
           <p>Телефон: +7 (908) 992-50-30</p>
 
           <h3 className="font-semibold text-foreground">3. Персональные данные, которые мы обрабатываем</h3>
@@ -66,13 +66,13 @@ const PrivacyModal = ({ open, onClose }: PrivacyModalProps) => (
           <p>Оператор применяет технические и организационные меры защиты: ограничение доступа к данным, использование HTTPS, регулярный контроль мер защиты.</p>
 
           <h3 className="font-semibold text-foreground">10. Права субъекта персональных данных</h3>
-          <p>Пользователь вправе: получить информацию об обработке данных; требовать уточнения или удаления данных; отозвать согласие; обжаловать действия Оператора в Роскомнадзор или суд. Запрос направляется на: <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a>. Срок рассмотрения — 30 календарных дней.</p>
+          <p>Пользователь вправе: получить информацию об обработке данных; требовать уточнения или удаления данных; отозвать согласие; обжаловать действия Оператора в Роскомнадзор или суд. Запрос направляется на: <span className="text-foreground">ppt@pmvl.ru</span>. Срок рассмотрения — 30 календарных дней.</p>
 
           <h3 className="font-semibold text-foreground">11. Изменение Политики</h3>
           <p>Оператор вправе вносить изменения в Политику. Новая редакция вступает в силу с момента публикации на Сайте. Продолжение использования Сайта означает согласие Пользователя с новой редакцией Политики.</p>
 
           <h3 className="font-semibold text-foreground">12. Контактная информация</h3>
-          <p>Email: <a href="mailto:ppt@pmvl.ru" className="text-primary underline">ppt@pmvl.ru</a></p>
+          <p>Email: <span className="text-foreground">ppt@pmvl.ru</span></p>
           <p>Телефон: +7 (908) 992-50-30</p>
           <p>Адрес: г. Владивосток, пр-кт Океанский, 54, оф. 315</p>
           <p className="pt-2 text-xs">© 2026 ООО «ТО «Тихий Океан»». Все права защищены.</p>
