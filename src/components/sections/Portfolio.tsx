@@ -207,7 +207,7 @@ const Portfolio = () => {
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-10">
             <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              onClick={() => { setPage((p) => Math.max(1, p - 1)); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
               disabled={page === 1}
               className="px-4 py-2 rounded-full bg-secondary/50 hover:bg-secondary text-secondary-foreground disabled:opacity-30 transition-all"
             >
@@ -216,7 +216,7 @@ const Portfolio = () => {
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
               <button
                 key={p}
-                onClick={() => setPage(p)}
+                onClick={() => { setPage(p); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
                 className={`w-10 h-10 rounded-full font-medium transition-all ${
                   p === page
                     ? 'bg-accent text-accent-foreground shadow-lg scale-105'
@@ -227,7 +227,7 @@ const Portfolio = () => {
               </button>
             ))}
             <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
               disabled={page === totalPages}
               className="px-4 py-2 rounded-full bg-secondary/50 hover:bg-secondary text-secondary-foreground disabled:opacity-30 transition-all"
             >
