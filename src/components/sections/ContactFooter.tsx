@@ -316,10 +316,10 @@ const ContactFooter = () => {
             <div>
               <h4 className="font-bold text-lg mb-4 text-white">Информация</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">О компании</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Портфолио</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Отзывы</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Контакты</a></li>
+                <li><a href="#statistics" className="hover:text-primary transition-colors">О компании</a></li>
+                <li><a href="#portfolio" className="hover:text-primary transition-colors">Портфолио</a></li>
+                <li><a href="#testimonials" className="hover:text-primary transition-colors">Отзывы</a></li>
+                <li><a href="#contact" className="hover:text-primary transition-colors">Контакты</a></li>
                 <li>
                   <button
                     onClick={() => setPrivacyModalOpen(true)}
