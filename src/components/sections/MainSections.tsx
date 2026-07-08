@@ -8,7 +8,7 @@ const MainSections = () => {
     { icon: "CalendarCheck", number: "200+", text: "мероприятий за 5 лет" },
     { icon: "Users", number: "10 000+", text: "участников на крупнейшем проекте" },
     { icon: "Headset", number: "24/7", text: "техподдержка на мероприятии" },
-    { icon: "Star", number: "100%", text: "положительных отзывов" },
+    { icon: "Star", number: "50+", text: "довольных клиентов" },
   ];
 
   const services = [

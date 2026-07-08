@@ -26,7 +26,7 @@ const HeroHeader = () => {
             className="w-64 md:w-80 mx-auto mb-8 animate-fade-in"
           />
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground animate-fade-in">
-            Техническое обеспечение мероприятий под ключ
+            Техническое обеспечение мероприятий во Владивостоке под ключ
           </h1>
           <p className="text-xl md:text-2xl text-secondary mb-8 animate-fade-in">
             Звуковое и световое оборудование, LED-экраны, сценические конструкции, шатры
